@@ -1,6 +1,13 @@
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
+    <article v-for="professor in professors">
+      <h2>{{ professor.name }}</h2>
+      <p>{{ professor.title }}</p>
+      <p>{{ professor.school }}</p>
+      <p>{{ professor.department }}</p>
+      <p>{{ professor.subject }}</p>
+    </article>
     <div class="review-index" v-for="review in reviews">
       <p>{{ review.id }}</p>
       <h4>{{ review.author }}</h4>
@@ -22,10 +29,15 @@ export default {
   data: function () {
     return {
       message: "Welcome to rate my professor! This is a change.",
+      professors: [],
       reviews: [],
     };
   },
   created: function () {
+    axios.get("/professors").then((response) => {
+      console.log("All Professors:", response.data);
+      this.professors = response.data;
+    });
     axios.get("/reviews").then((response) => {
       console.log("All Reviews", response.data);
       this.reviews = response.data;
