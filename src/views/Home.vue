@@ -8,6 +8,14 @@
       <p>{{ professor.department }}</p>
       <p>{{ professor.subject }}</p>
     </article>
+    <div class="review-index" v-for="review in reviews">
+      <p>{{ review.id }}</p>
+      <h4>{{ review.author }}</h4>
+      <p>{{ review.date }}</p>
+      <p>{{ review.text }}</p>
+      <p>{{ review.score }}</p>
+      <p>{{ review.professor_id }}</p>
+    </div>
   </div>
 </template>
 
@@ -18,22 +26,23 @@ import axios from "axios";
 
 export default {
   name: "Home",
-  data: function() {
+  data: function () {
     return {
       message: "Welcome to rate my professor! This is a change.",
-      professors: []
+      professors: [],
+      reviews: [],
     };
   },
-  created: function() {
-    this.indexProfessors();
+  created: function () {
+    axios.get("/professors").then((response) => {
+      console.log("All Professors:", response.data);
+      this.professors = response.data;
+    });
+    axios.get("/reviews").then((response) => {
+      console.log("All Reviews", response.data);
+      this.reviews = response.data;
+    });
   },
-  methods: {
-    indexProfessors: function() {
-      axios.get("/professors").then(response => {
-        console.log("All Professors:", response.data);
-        this.professors = response.data;
-      });
-    }
-  }
+  methods: {},
 };
 </script>
