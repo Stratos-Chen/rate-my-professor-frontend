@@ -1,12 +1,13 @@
 <template>
   <div class="home">
-    <h1>{{ message }}</h1>
+    <h1>List of Professors </h1>
     <div class="professor-index" v-for="professor in professors">
       <h2>{{ professor.name }}</h2>
       <p>{{ professor.title }}</p>
       <p>{{ professor.school }}</p>
       <p>{{ professor.department }}</p>
       <p>{{ professor.subject }}</p>
+      <button class="btn btn-primary" v-on:click="deleteProfessor(professor.id)">Delete</button>
     </div>
     <form class="professor-create" v-on:submit.prevent="createProfessor()">
       <h2>New Professor</h2>
@@ -62,7 +63,8 @@ export default {
       title: "",
       school: "",
       department: "",
-      subject: ""
+      subject: "",
+      professor: {}
     };
   },
   created: function() {
@@ -74,6 +76,10 @@ export default {
       console.log("All Reviews", response.data);
       this.reviews = response.data;
     });
+    // axios.get("/professors/:id").then(response => {
+    //   console.log(response.data);
+    //   this.professor = response.data;
+    // });
   },
   methods: {
     createProfessor: function() {
@@ -88,11 +94,19 @@ export default {
         .post("professors", params)
         .then(response => {
           console.log("Success", response.data);
-          this.$router.push("/professors");
+          this.$router.push("/");
         })
         .catch(error => {
           this.errors = error.response.data.errors;
         });
+    },
+    deleteProfessor: function(id) {
+      if (confirm("Are you sure you want to delete this entry?")) {
+        axios.delete(`professors/${id}`).then(response => {
+          console.log("Successfully destroyed", response.data);
+          this.$router.push("/");
+        });
+      }
     }
   }
 };
