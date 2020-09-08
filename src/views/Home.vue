@@ -88,7 +88,8 @@ export default {
       school: "",
       department: "",
       subject: "",
-      currentProfessor: {}
+      currentProfessor: {},
+      errors: []
     };
   },
   created: function() {
