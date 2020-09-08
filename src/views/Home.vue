@@ -7,6 +7,7 @@
       <p>{{ professor.school }}</p>
       <p>{{ professor.department }}</p>
       <p>{{ professor.subject }}</p>
+      <button class="btn btn-primary" v-on:click="editProfessor(professor)">Edit</button>
       <button class="btn btn-primary" v-on:click="deleteProfessor(professor.id)">Delete</button>
     </div>
     <form class="professor-create" v-on:submit.prevent="createProfessor()">
@@ -36,6 +37,29 @@
       </div>
       <input type="submit" class="btn btn-primary" value="Create" />
     </form>
+    <dialog id="professor-edit">
+      <div class="form-group">
+        <label>Professor's Name: </label>
+        <input type="text" class="form-control" v-model="currentProfessor.name" />
+      </div>
+      <div class="form-group">
+        <label>Title: </label>
+        <input type="text" class="form-control" v-model="currentProfessor.title" />
+      </div>
+      <div class="form-group">
+        <label>School: </label>
+        <input type="text" class="form-control" v-model="currentProfessor.school" />
+      </div>
+      <div>
+        <label>Department: </label>
+        <input type=text class="form-control" v-model="currentProfessor.department" />
+      </div>
+      <div>
+        <label>Subject: </label>
+        <input type=text class="form-control" v-model="currentProfessor.subject" />
+      </div>
+      <button v-on:click="updateProfessor()">Update Professor Information</button>
+    </dialog>
     <div class="review-index" v-for="review in reviews">
       <p>{{ review.id }}</p>
       <h4>{{ review.author }}</h4>
@@ -64,7 +88,7 @@ export default {
       school: "",
       department: "",
       subject: "",
-      professor: {}
+      currentProfessor: {}
     };
   },
   created: function() {
@@ -100,6 +124,27 @@ export default {
           this.errors = error.response.data.errors;
         });
     },
+    editProfessor: function(professor) {
+      this.currentProfessor = professor;
+      document.querySelector("#professor-edit").showModal();
+    },
+    // updateProfessor: function(id) {
+    //   var params = {
+    //     name: this.professor.name,
+    //     title: this.professor.title,
+    //     school: this.professor.school,
+    //     department: this.professor.department,
+    //     subject: this.professor.subject
+    //   };
+    //   axios
+    //     .patch(`professor/${id}`, params)
+    //     .then(response => {
+    //       this.$router.push(`/professors/${id}`);
+    //     })
+    //     .catch(error => {
+    //       this.error = error.response.data.errors;
+    //     });
+    // },
     deleteProfessor: function(id) {
       if (confirm("Are you sure you want to delete this entry?")) {
         axios.delete(`professors/${id}`).then(response => {
