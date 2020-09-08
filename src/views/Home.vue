@@ -20,7 +20,7 @@ export default {
   name: "Home",
   data: function() {
     return {
-      message: "Welcome to rate my professor!",
+      message: "Welcome to rate my professor! This is a change.",
       professors: []
     };
   },
