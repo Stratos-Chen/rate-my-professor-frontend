@@ -11,7 +11,6 @@
       <button class="btn btn-primary" v-on:click="editProfessor(professor)">Edit</button>
       <button class="btn btn-primary" v-on:click="deleteProfessor(professor.id)">Delete</button>
     </div>
-  <professor-show></professor-show>
     <!-- Create Professor -->
     <form class="professor-create" v-on:submit.prevent="createProfessor()">
       <h2>New Professor</h2>
@@ -102,14 +101,11 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from "../components/HelloWorld.vue";
-import ProfessorShow from "../components/professor-show.vue";
 import axios from "axios";
 
 export default {
-  name: "Home",
-  components: {
-    ProfessorShow,
-  },
+  name: "index",
+  components: {},
   data: function () {
     return {
       message: "Welcome to rate my professor! This is a change.",
