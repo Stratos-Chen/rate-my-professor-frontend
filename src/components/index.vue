@@ -68,7 +68,7 @@
     <!-- Review Index -->
     <div class="review-index" v-for="review in reviews">
       <h4>Author: {{ review.author }}</h4>
-      <p>Date: {{ review.date }}</p>
+      <p>Date: {{ review.date | moment('MMMM Do YYYY') }}</p>
       <p>Review: {{ review.text }}</p>
       <p>Score: {{ review.score }}</p>
       <p>Professor:{{ getProfessorName(review.professor_id) }}</p>
@@ -102,6 +102,8 @@
 // @ is an alias to /src
 import HelloWorld from "../components/HelloWorld.vue";
 import axios from "axios";
+// import * as moment from "moment/moment";
+import VueMoment from "vue-moment";
 
 export default {
   name: "index",
