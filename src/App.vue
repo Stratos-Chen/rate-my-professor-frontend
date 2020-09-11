@@ -3,13 +3,16 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
-      <router-link to="/professor-show">Search Results</router-link>
     </div>
     <router-view/>
   </div>
 </template>
 
 <style>
+body {
+  background-color: #ededed;
+  font-family: "Lato", sans-serif;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
