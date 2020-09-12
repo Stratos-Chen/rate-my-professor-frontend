@@ -1,13 +1,13 @@
 <template>
   <div class="professorshow">
-    <!-- Index Professors -->
-    
+
+    <!-- Professor Card -->
+  
     <div class="professor">
       <div class="professor-info">
         <div class="rating">
           <h1 id="score">{{ professorScore }}</h1>
           <i class="material-icons">star_rate</i><i class="material-icons">star_rate</i><i class="material-icons">star_rate</i><i class="material-icons">star_rate</i>
-
           <p>{{ professor.title }}</p>
         </div>
         <h1>{{ professor.name }}</h1>
@@ -21,6 +21,7 @@
 
 
     <!-- Review Index -->
+
     <div class="reviews">
       <div class="row reviews-bar">
         <h2>REVIEWS</h2><br>
@@ -31,7 +32,7 @@
         </div>
       </div>
       <div class="review-index" v-for="review in reviews">
-        <h4>{{ review.author }} - {{ review.date | moment('MMM Do, YYYY')}}</h4>
+        <h4>{{ review.author }} - {{ review.date | moment('MMM DD, YYYY')}}</h4>
         <p>Score: {{ review.score }}</p>
         <p>{{ review.text }}</p> 
         <button class="btn-secondary" v-on:click="editReview(review)"><i class="material-icons" style="font-size:1.2em;">edit</i>Edit Review</button>
@@ -40,7 +41,8 @@
       <h2 v-if="reviews.length===0" style="text-align: center;font-weight:300;"><br>No Reviews Yet!</h2>
     </div>
 
-    <!-- Create Review -->
+    <!-- New Review Modal -->
+
     <dialog id="reviewnew">
       <form id="review-create">
         Author:<input type ="text" v-model="newReviewAuthor"></input>
@@ -52,18 +54,19 @@
       </form>
     </dialog>
 
-    <!-- Edit Review -->
+    <!-- Edit Review Modal -->
+
     <dialog id="review-edit">
       <form>
         Author:<input type ="text" v-model="currentReview.author"></input><br>
         Text:<input type ="text" style="height: 200px;width: 200px;" v-model="currentReview.text"></input><br>
         Score:<input type ="number" step="0.5" v-model="currentReview.score"></input><br>
-        Professor_Id:<input type ="number" v-model="currentReview.professor_id"></input><br>
         <button v-on:click="updateReview()">Update Review</button><br>
       </form>
     </dialog>
 
-        <!-- Edit Professor Modal -->
+    <!-- Edit Professor Modal -->
+
     <dialog id="professor-edit">
       <div class="form-group">
         <label>Professor's Name: </label>
@@ -278,10 +281,6 @@ export default {
         });
       }
     },
-    // getProfessorName: function (professorId) {
-    //   var index = this.professors.find((x) => x.id === professorId);
-    //   return index.name;
-    // },
     editReview: function (review) {
       this.currentReview = review;
 
@@ -289,15 +288,15 @@ export default {
     },
     updateReview: function () {
       var params = {
-        author: this.currentReviewAuthor,
-        date: this.currentReviewDate,
-        text: this.currentReviewText,
-        score: this.currentReviewScore,
-        professor_id: this.currentReviewProfessorId,
+        id: this.currentReview.id,
+        text: this.currentReview.text,
+        score: this.currentReview.score,
       };
-      axios.put(`reviews/${this.review.id}`, params).then((response) => {
-        console.log("");
-      });
+      axios
+        .put(`/reviews/${this.currentReview.id}`, params)
+        .then((response) => {
+          console.log("");
+        });
     },
     editProfessor: function (professor) {
       this.currentProfessor = professor;
@@ -335,7 +334,9 @@ export default {
       });
       var result = sumTotal / this.reviews.length;
       console.log("Rating:", result);
-      this.professorScore = result.toFixed(1);
+      if (!isNaN(result)) {
+        this.professorScore = result.toFixed(1);
+      }
     },
   },
 };
