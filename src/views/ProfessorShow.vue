@@ -6,34 +6,41 @@
     <div class="professor">
       <div class="professor-info">
         <div class="rating">
-          <h1 id="score">{{ professorScore }}</h1>
-          <i class="material-icons">star_rate</i><i class="material-icons">star_rate</i><i class="material-icons">star_rate</i><i class="material-icons">star_rate</i>
+          <h1 id="score" style="font-weight:500 !important;">{{ professorScore }}</h1>
+          <div class="starrating">
+            <star-rating v-model="professorScore" :increment="0.1" :star-size="23" :padding="9" active-color="#da952e" :read-only="true" :show-rating="false"></star-rating>
+          </div>
+          <!-- <i class="material-icons">star_rate</i><i class="material-icons">star_rate</i><i class="material-icons">star_rate</i><i class="material-icons">star_rate</i> -->
           <p>{{ professor.title }}</p>
         </div>
         <h1>{{ professor.name }}</h1>
         <h3>{{ professor.school }}</h3>
         <p>{{ professor.department }}</p>
         <p>{{ professor.subject }}</p>
-        <div class="image"></div>
+        <div class="image"><img src="//logo.clearbit.com/www.nintendo.com?size=80"></div>
       </div>
     </div>
+
+    
 
 
 
     <!-- Review Index -->
 
     <div class="reviews">
+      
       <div class="row reviews-bar">
         <h2>REVIEWS</h2><br>
         <div class=buttonholder>
-          <button class="btn-tertiary" style="color:#505050;">Sort<i class="material-icons">arrow_drop_down</i></button>
+          <button class="btn-tertiary" style="color:#505050;" v-on:click="sortOrderReview()">Sort<i class="material-icons">arrow_drop_down</i></button>
           <button class="btn-tertiary" style="color:#505050;">Filter<i class="material-icons">arrow_drop_down</i></button>
-          <button v-on:click="addReview()"><i class="material-icons" style="font-size:1.2em;font-weight:900;">add</i>Add Review</button>
+          <button class="btn-primary" v-on:click="addReview()"><i class="material-icons" style="font-size:1.2em;font-weight:900;">add</i>Add Review</button>
         </div>
       </div>
-      <div class="review-index" v-for="review in reviews">
+      <div class="review-index" v-for="review in orderBy(reviews, 'date', reviewSort)">
         <h4>{{ review.author }} - {{ review.date | moment('MMM DD, YYYY')}}</h4>
         <p>Score: {{ review.score }}</p>
+          <star-rating v-model="review.score" :increment="0.1" :star-size="15" :padding="5" active-color="#da952e" :read-only="true" :show-rating="false"></star-rating>
         <p>{{ review.text }}</p> 
         <button class="btn-secondary" v-on:click="editReview(review)"><i class="material-icons" style="font-size:1.2em;">edit</i>Edit Review</button>
         <button class="btn-tertiary" v-on:click="deleteReview(review.id)">Delete Review</button>
@@ -49,6 +56,8 @@
         Date:<input type ="date" v-model="newReviewDate"></input>
         Text:<input type ="text" v-model="newReviewText"></input>
         Score:<input type ="number" step="0.5" v-model="newReviewScore"></input>
+
+        <star-rating :increment="0.5"></star-rating>
         Professor_Id:<input type ="number" v-model="newReviewProfessorId"></input>
         <button v-on:click="createReview()">Create Review</button>
       </form>
@@ -90,8 +99,11 @@
       </div>
       <button v-on:click="updateProfessor()">Update Professor Information</button>
     </dialog>
-    
+    <a href="https://clearbit.com">Logos provided by Clearbit</a>
   </div>
+
+
+
 </template>
 <style scoped>
 .professor {
@@ -127,15 +139,21 @@
 }
 
 .professor .image {
-  height: 64px;
-  width: 64px;
-  background-color: gray;
+  height: 80px;
+  width: 80px;
   margin: 3rem auto 1rem auto;
 }
 
 .professor .rating {
   text-align: center;
   margin-bottom: 6rem;
+}
+
+.professor .starrating {
+  display: inline-block;
+  margin: 0 auto 0 9px;
+  align-content: center;
+  text-align: center;
 }
 
 .reviews {
@@ -197,6 +215,10 @@ button {
   cursor: pointer;
 }
 
+.btn-primary:hover {
+  background-color: #a4c2ff;
+}
+
 i {
   padding-right: 0.3em;
   vertical-align: bottom;
@@ -208,7 +230,11 @@ i {
 
 .btn-tertiary {
   background-color: rgba(0, 0, 0, 0);
-  color: #999999;
+  /* color: #999999; */
+}
+
+.btn-tertiary:hover {
+  color: #999999 !important;
 }
 
 dialog {
@@ -225,9 +251,11 @@ dialog form {
 import HelloWorld from "../components/HelloWorld.vue";
 import axios from "axios";
 import VueMoment from "vue-moment";
+import Vue2Filters from "vue2-filters";
 
 export default {
   name: "Home",
+  mixins: [Vue2Filters.mixin],
   components: {},
   data: function () {
     return {
@@ -241,6 +269,7 @@ export default {
       newReviewScore: "",
       newReviewProfessorId: "",
       currentReview: [],
+      reviewSort: -1,
       currentProfessor: {},
       errors: [],
     };
@@ -335,7 +364,14 @@ export default {
       var result = sumTotal / this.reviews.length;
       console.log("Rating:", result);
       if (!isNaN(result)) {
-        this.professorScore = result.toFixed(1);
+        this.professorScore = +result.toFixed(1);
+      }
+    },
+    sortOrderReview: function () {
+      if (this.reviewSort === 1) {
+        this.reviewSort = -1;
+      } else if (this.reviewSort === -1) {
+        this.reviewSort = 1;
       }
     },
   },

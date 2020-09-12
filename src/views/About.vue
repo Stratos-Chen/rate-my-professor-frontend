@@ -3,7 +3,7 @@
     <button v-on:click="changeView()">Switch</button>
     <h1>This is an about page</h1>
     <div v-show="pagelabel">
-      <index></index>
+
     </div>
   </div>
 </template>
