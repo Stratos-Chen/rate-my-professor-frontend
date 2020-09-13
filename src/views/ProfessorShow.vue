@@ -7,13 +7,13 @@
       <div class="professor-info">
         <div class="rating">
           <h1 id="score" style="font-weight:500 !important;">{{ professorScore }}</h1>
-          <div class="starrating">
+          <div class="starrating" v-show="professorScore">
             <star-rating v-model="professorScore" :increment="0.1" :star-size="23" :padding="9" active-color="#da952e" :read-only="true" :show-rating="false"></star-rating>
           </div>
         </div>
-        <div class="image"><img :src="`//logo.clearbit.com/${schoolUrl}?size=75`" style="border-radius: 3px;">
+        <div class="image"><img :src="`//logo.clearbit.com/${schoolUrl}?size=54`" style="border-radius: 3px;">
         </div>
-        <h3>{{ professor.school }}</h3>
+        <p style="text-align: center;">{{ professor.school }}</p>
         <div class="professor-details">
           <h1>{{ professor.name }}</h1>
           <h4><strong>{{ professor.title }}</strong></h4>
@@ -34,12 +34,13 @@
       <div class="row reviews-bar">
         <h2>REVIEWS</h2><br>
         <div class=buttonholder>
-          <button class="btn-tertiary" style="color:#505050;" v-on:click="sortOrderReview()">Sort<i class="material-icons">arrow_drop_down</i></button>
-          <button class="btn-tertiary" v-on:click="filterArray()">Stars({{ratingFilter}})<i class="material-icons">arrow_drop_down</i></button>
+          <button class="btn-tertiary" style="color:#505050;" v-on:click="sortScoreReview()">Score<i class="material-icons" >arrow_drop_down</i></button>
+          <button class="btn-tertiary" style="color:#505050;" v-on:click="sortDateReview()">Date<i class="material-icons">arrow_drop_down</i></button>
+          <button class="btn-tertiary" v-on:click="filterArray()">Stars ({{ratingFilter}})<i class="material-icons">arrow_drop_down</i></button>
           <button class="btn-primary" v-on:click="addReview()"><i class="material-icons" style="font-size:1.2em;font-weight:900;">add</i>Add Review</button>
         </div>
       </div>
-      <div class="review-index" v-for="review in  orderBy(reviewDisplay, 'date', reviewSort)">
+      <div class="review-index" v-for="review in  orderBy(reviewDisplay, sortVariable, reviewSort)">
 
         <h4>{{ review.author }} - {{ review.date | moment('MMM DD, YYYY')}}</h4>
         <p>Score: {{ review.score }}</p>
@@ -56,7 +57,6 @@
     <dialog id="reviewnew">
       <form id="review-create">
         Author:<input type ="text" v-model="newReviewAuthor"></input>
-        Date:<input type ="date" v-model="newReviewDate"></input>
         Text:<input type ="text" v-model="newReviewText"></input>
         Score:<input type ="number" step="0.5" v-model="newReviewScore"></input>
 
@@ -155,14 +155,10 @@
 }
 
 .professor .image {
-  height: 75px;
-  width: 75px;
+  height: 54px;
+  width: 54px;
   margin: 4rem auto 0rem auto;
-  box-shadow: 4px 6px 16px 0px rgba(41, 41, 41, 0.427);
-}
-
-.professor h3 {
-  text-align: center;
+  box-shadow: 4px 6px 13px 0px rgba(41, 41, 41, 0.427);
 }
 
 .professor-details {
@@ -172,12 +168,23 @@
 }
 
 .professor-details h1 {
-  line-height: 0.1em;
+  display: inline-block;
+  margin-bottom: 0;
+}
+
+.professor-details h4 {
+  margin-top: 0;
 }
 
 .professor-details h6 {
-  margin-top: 6em;
+  margin-top: 4em;
+  margin-bottom: 0em;
+  line-height: 0em;
 }
+.professor-details p {
+  line-height: 0em;
+}
+
 .reviews {
   display: inline-block;
   width: 45%;
@@ -214,7 +221,7 @@
 }
 
 .buttonholder {
-  width: 450px;
+  width: 600px;
   text-align: right;
   display: block;
   margin: 0 0 0 auto;
@@ -235,13 +242,14 @@ button {
   color: white;
   text-transform: uppercase;
   cursor: pointer;
+  outline: none;
 }
 
 .btn-primary:hover {
   background-color: #a4c2ff;
 }
 
-i {
+button i {
   padding-right: 0.3em;
   vertical-align: bottom;
 }
@@ -296,7 +304,6 @@ export default {
       reviewsDisplay: [],
       professorScore: "",
       newReviewAuthor: "",
-      newReviewDate: "",
       newReviewText: "",
       newReviewScore: "",
       newReviewProfessorId: "",
@@ -306,6 +313,7 @@ export default {
       errors: [],
       schoolUrl: "nyu.edu",
       ratingFilter: 0,
+      sortVariable: "",
     };
   },
   created: function () {
@@ -402,7 +410,16 @@ export default {
         this.professorScore = +result.toFixed(1);
       }
     },
-    sortOrderReview: function () {
+    sortDateReview: function () {
+      this.sortVariable = "date";
+      if (this.reviewSort === 1) {
+        this.reviewSort = -1;
+      } else if (this.reviewSort === -1) {
+        this.reviewSort = 1;
+      }
+    },
+    sortScoreReview: function () {
+      this.sortVariable = "score";
       if (this.reviewSort === 1) {
         this.reviewSort = -1;
       } else if (this.reviewSort === -1) {
