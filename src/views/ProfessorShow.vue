@@ -10,14 +10,16 @@
           <div class="starrating">
             <star-rating v-model="professorScore" :increment="0.1" :star-size="23" :padding="9" active-color="#da952e" :read-only="true" :show-rating="false"></star-rating>
           </div>
-          <!-- <i class="material-icons">star_rate</i><i class="material-icons">star_rate</i><i class="material-icons">star_rate</i><i class="material-icons">star_rate</i> -->
-          <p>{{ professor.title }}</p>
         </div>
-        <h1>{{ professor.name }}</h1>
+        <div class="image"><img :src="`//logo.clearbit.com/${schoolUrl}?size=75`" style="border-radius: 3px;">
+        </div>
         <h3>{{ professor.school }}</h3>
-        <p>{{ professor.department }}</p>
-        <p>{{ professor.subject }}</p>
-        <div class="image"><img src="//logo.clearbit.com/www.nintendo.com?size=80"></div>
+        <div class="professor-details">
+          <h1>{{ professor.name }}</h1>
+          <h4><strong>{{ professor.title }}</strong></h4>
+          <h6>{{ professor.department }}</h6>
+          <p>{{ professor.subject }}</p>
+        </div>
       </div>
     </div>
 
@@ -33,11 +35,12 @@
         <h2>REVIEWS</h2><br>
         <div class=buttonholder>
           <button class="btn-tertiary" style="color:#505050;" v-on:click="sortOrderReview()">Sort<i class="material-icons">arrow_drop_down</i></button>
-          <button class="btn-tertiary" style="color:#505050;">Filter<i class="material-icons">arrow_drop_down</i></button>
+          <button class="btn-tertiary" v-on:click="filterArray()">Stars({{ratingFilter}})<i class="material-icons">arrow_drop_down</i></button>
           <button class="btn-primary" v-on:click="addReview()"><i class="material-icons" style="font-size:1.2em;font-weight:900;">add</i>Add Review</button>
         </div>
       </div>
-      <div class="review-index" v-for="review in orderBy(reviews, 'date', reviewSort)">
+      <div class="review-index" v-for="review in  orderBy(reviewDisplay, 'date', reviewSort)">
+
         <h4>{{ review.author }} - {{ review.date | moment('MMM DD, YYYY')}}</h4>
         <p>Score: {{ review.score }}</p>
           <star-rating v-model="review.score" :increment="0.1" :star-size="15" :padding="5" active-color="#da952e" :read-only="true" :show-rating="false"></star-rating>
@@ -99,7 +102,7 @@
       </div>
       <button v-on:click="updateProfessor()">Update Professor Information</button>
     </dialog>
-    <a href="https://clearbit.com">Logos provided by Clearbit</a>
+    <a href="https://clearbit.com" class="credits">Logos provided by Clearbit</a>
   </div>
 
 
@@ -123,30 +126,21 @@
 }
 
 .professor #score {
-  font-size: 4em;
+  font-size: 5em;
   color: #999999;
   letter-spacing: -10%;
   font-kerning: none;
   text-align: center;
+  margin-block-end: 0.5px;
 }
 
 .professor i {
   color: #dc9731;
 }
 
-.professor h1 {
-  font-weight: 900 !important;
-}
-
-.professor .image {
-  height: 80px;
-  width: 80px;
-  margin: 3rem auto 1rem auto;
-}
-
 .professor .rating {
   text-align: center;
-  margin-bottom: 6rem;
+  margin-bottom: 2rem;
 }
 
 .professor .starrating {
@@ -156,6 +150,34 @@
   text-align: center;
 }
 
+.professor h1 {
+  font-weight: 900 !important;
+}
+
+.professor .image {
+  height: 75px;
+  width: 75px;
+  margin: 4rem auto 0rem auto;
+  box-shadow: 4px 6px 16px 0px rgba(41, 41, 41, 0.427);
+}
+
+.professor h3 {
+  text-align: center;
+}
+
+.professor-details {
+  margin-top: 5rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+.professor-details h1 {
+  line-height: 0.1em;
+}
+
+.professor-details h6 {
+  margin-top: 6em;
+}
 .reviews {
   display: inline-block;
   width: 45%;
@@ -230,11 +252,14 @@ i {
 
 .btn-tertiary {
   background-color: rgba(0, 0, 0, 0);
-  /* color: #999999; */
+  color: #505050;
 }
 
 .btn-tertiary:hover {
   color: #999999 !important;
+}
+.btn-tertiary:active {
+  border-color: white;
 }
 
 dialog {
@@ -244,6 +269,12 @@ dialog {
 
 dialog form {
   text-align: left;
+}
+
+.credits {
+  text-align: center;
+  display: block;
+  color: rgb(172, 167, 182);
 }
 </style>
 <script>
@@ -262,6 +293,7 @@ export default {
       message: "Welcome to rate my professor! This is a change.",
       professor: {},
       reviews: [],
+      reviewsDisplay: [],
       professorScore: "",
       newReviewAuthor: "",
       newReviewDate: "",
@@ -272,6 +304,8 @@ export default {
       reviewSort: -1,
       currentProfessor: {},
       errors: [],
+      schoolUrl: "nyu.edu",
+      ratingFilter: 0,
     };
   },
   created: function () {
@@ -279,6 +313,7 @@ export default {
       console.log("Data:", response.data);
       this.professor = response.data.professors[0];
       this.reviews = response.data.reviews;
+      this.reviewDisplay = this.reviews;
       this.calculateScore();
     });
   },
@@ -373,6 +408,17 @@ export default {
       } else if (this.reviewSort === -1) {
         this.reviewSort = 1;
       }
+    },
+    filterArray: function () {
+      this.ratingFilter += 1;
+      if (this.ratingFilter === 6) {
+        this.ratingFilter = 0;
+        this.reviewDisplay = this.reviews;
+      }
+      console.log(this.ratingFilter);
+      this.reviewDisplay = this.reviewDisplay.filter(
+        (index) => index["score"] >= this.ratingFilter
+      );
     },
   },
 };
