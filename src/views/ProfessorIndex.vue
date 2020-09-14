@@ -245,7 +245,7 @@ import axios from "axios";
 import Vue2Filters from "vue2-filters";
 export default {
   mixins: [Vue2Filters.mixin],
-  data: function() {
+  data: function () {
     return {
       professors: [],
       nameFilter: "",
@@ -260,19 +260,20 @@ export default {
       school: "",
       department: "",
       subject: "",
+      nameSort: 1,
     };
   },
-  created: function() {
+  created: function () {
     axios.get("/professors").then((response) => {
       console.log("All Professors:", response.data);
       this.professors = response.data;
     });
   },
   methods: {
-    addProfessor: function() {
+    addProfessor: function () {
       document.querySelector("#professor-new").showModal();
     },
-    createProfessor: function() {
+    createProfessor: function () {
       var params = {
         name: this.newProfessorName,
         title: this.newProfessorTitle,
@@ -289,7 +290,7 @@ export default {
           console.log(error.response.data.errors);
         });
     },
-    deleteProfessor: function(id) {
+    deleteProfessor: function (id) {
       if (confirm("Are you sure you want to delete this professor?")) {
         axios.delete(`/professors/${id}`).then((response) => {
           console.log("Professor Deleted", response.data);
@@ -298,10 +299,19 @@ export default {
       }
     },
     sortProfessorByName: function () {
-      this.professors = this.professors.sort(function (a, b) {
-        return a.name.localeCompare(b.name);
-      });
-      console.log(this.professors);
+      if (this.nameSort === 1) {
+        this.nameSort = -1;
+        this.professors.sort(function (a, b) {
+          var result = a.name.localeCompare(b.name);
+          return result;
+        });
+      } else if (this.nameSort === -1) {
+        this.nameSort = 1;
+        this.professors.sort(function (b, a) {
+          var result = a.name.localeCompare(b.name);
+          return result;
+        });
+      }
     },
 
     // this.sortVariable = "name";
