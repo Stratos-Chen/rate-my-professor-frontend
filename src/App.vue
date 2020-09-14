@@ -35,16 +35,16 @@
   font-feature-settings: "liga";
 }
 
-table,
+/* table,
 tr,
 td {
   border: 1px solid black;
   border-collapse: collapse;
   background-color: floralwhite;
-}
+} */
 body {
   background-color: #ededed;
-  font-family: "Lato", sans-serif;
+  font-family: "Avenir", sans-serif;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
