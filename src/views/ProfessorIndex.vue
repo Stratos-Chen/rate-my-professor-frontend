@@ -16,7 +16,7 @@
     <!-- Professor Index -->
     <div class="professor-table">
     
-    <table class ="professor-labels" style="width:95%;">
+    <table class ="professor-labels" style="width:100%;">
       <tr>
         <td style="width:250px">Name</td>
         <td style="width:200px">Title</td>
@@ -29,7 +29,7 @@
 
     <table class="professor-information"
       v-for="professor in filterBy(professors, nameFilter, 'name')"
-      style="width:95%;"
+      style="width:100%;"
     >
       <tr>
         <td style="width:250px">
@@ -84,15 +84,16 @@
   margin: 5rem auto;
   border-radius: 11px;
   background-color: white;
+  padding: 2rem;
 }
 
 table {
-  border: none;
+  border-width: 0px;
 }
 
 td {
-  border-width: 0px;
   height: 3em;
+  border-style: 0px;
 }
 
 .professor-labels {
@@ -106,6 +107,10 @@ td {
 .professor-information {
   text-align: left;
   font-size: 1.2em;
+}
+
+.professor-information tr:nth-child(even) {
+  background: #919191;
 }
 </style>
 
