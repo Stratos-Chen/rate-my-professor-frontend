@@ -8,7 +8,7 @@
         <form role="search" method="get" class="search-form" action="">
           <label>
             
-            <span class="screen-reader-text">Search for:</span>
+            <span class="screen-reader-text"></span>
             <input type="search" v-model="nameFilter" class="search-field" />
             <button class="search-button">
               Search
@@ -21,6 +21,9 @@
     </div>
 
     <button class="add-professor-button" v-on:click="addProfessor()">
+      <i class="material-icons">
+          school
+      </i>
        Add Professor
       </button>
         
@@ -115,12 +118,13 @@
 
 .searchbar input {
   display: inline-block;
-  width: 80%;
+  width: 60%;
   height: 2;
   font-size: 1.9em;
 }
 
 .search-button {
+  display: inline-block;
   margin: 0 2rem 2rem 2rem;
   width: 100px;
   color: rgb(48, 48, 48);
@@ -129,11 +133,21 @@
     rgba(244, 247, 40, 1) 0%,
     rgba(255, 160, 0, 1) 100%
   );
+  box-shadow: 4px 6px 6px -3px rgba(41, 41, 41, 0.25),
+    6px 8px 8px -4px rgba(41, 41, 41, 0.25);
 }
 
 .add-professor-button {
-  margin-top: 1rem;
-  padding: 0.5em;
+  margin-top: 3rem;
+  padding: 0.75em;
+}
+
+.add-professor-button i {
+  padding-right: 0.5em;
+}
+
+.add-professor-button:hover {
+  background-color: #a4c2ff;
 }
 
 button i {
