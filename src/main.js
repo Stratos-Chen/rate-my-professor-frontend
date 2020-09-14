@@ -4,7 +4,7 @@ import router from "./router";
 import axios from "axios";
 import VueMoment from "vue-moment";
 import Vue2Filters from 'vue2-filters';
-import StarRating from 'vue-star-rating'
+import StarRating from 'vue-star-rating';
 
 
 

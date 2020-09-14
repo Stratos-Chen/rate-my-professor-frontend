@@ -4,6 +4,7 @@
     <!-- Professor Card -->
   
     <div class="professor">
+
       <div class="professor-info">
         <div class="rating">
           <h1 id="score" style="font-weight:500 !important;">{{ professorScore }}</h1>
@@ -20,8 +21,8 @@
           <h6>{{ professor.department }}</h6>
           <p>{{ professor.subject }}</p>
         </div>
-        
       </div>
+
       <div class="professor-reviews" v-show="this.reviews.length > 0">
         <ul>  
           <li><i class="material-icons" >star</i><i class="material-icons" >star</i><i class="material-icons" >star</i><i class="material-icons" >star</i><i class="material-icons" >star</i>
@@ -56,6 +57,9 @@
           </li>
         </ul>
       </div>
+
+      <button class="btn-tertiary" id="professor-edit-btn" v-on:click="editProfessor()" ><i class="material-icons" style="font-size:1.2em;color: #CCCCCC;">create</i>edit</button>
+
     </div>
 
     
@@ -96,13 +100,12 @@
        <input type ="text" v-model="newReviewAuthor">
         <label>Text:</label>
         <textarea class="review-text" v-model="newReviewText"></textarea>
-        <label>Score:</label>
-        <input type ="number" step="0.5" v-model="newReviewScore">
+        <label style="line-height: 0.5em;">Score:</label>
+        <!-- <input type ="number" step="0.5" v-model="newReviewScore"> -->
 
         <div class="star-rater">
-          <star-rating :increment="0.5" :star-size="31" :padding="12"></star-rating>
+          <star-rating @rating-selected="setRating" :increment="0.5" :star-size="31" :padding="12" text-class='star-score'	></star-rating>
         </div>
-        
         
         <button class="dialog-button" v-on:click="createReview()">Create Review</button>
       </form>
@@ -115,8 +118,7 @@
         <label>Author:</label><input type ="text" v-model="currentReview.author"></input>
         <label>Text:</label><textarea class="review-text" v-model="currentReview.text"></textarea>
         <div class="star-rater">
-        <p>Score:    {{ currentReview.score}}</p>
-        <star-rating :increment="0.5" :star-size="31" :padding="12"></star-rating>
+          <star-rating v-model="currentReview.score" @rating-selected="setRating" :increment="0.5" :star-size="31" :padding="12"></star-rating>
         </div>
         <button v-on:click="updateReview()">Update Review</button><br>
       </form>
@@ -125,28 +127,22 @@
     <!-- Edit Professor Modal -->
 
     <dialog id="professor-edit">
-      <div class="form-group">
+      <h2>Edit Professor</h2>
+      <form>
         <label>Professor's Name: </label>
-        <input type="text" class="form-control" v-model="currentProfessor.name" />
-      </div>
-      <div class="form-group">
+        <input type="text" class="form-control" v-model="professor.name" />
         <label>Title: </label>
-        <input type="text" class="form-control" v-model="currentProfessor.title" />
-      </div>
-      <div class="form-group">
+        <input type="text" class="form-control" v-model="professor.title" />
         <label>School: </label>
-        <input type="text" class="form-control" v-model="currentProfessor.school" />
-      </div>
-      <div>
+        <input type="text" class="form-control" v-model="professor.school" />
         <label>Department:</label>
-        <input type=text class="form-control" v-model="currentProfessor.department" />
-      </div>
-      <div>
+        <input type=text class="form-control" v-model="professor.department" />
         <label>Subject:</label>
-        <input type=text class="form-control" v-model="currentProfessor.subject" />
-      </div>
-      <button v-on:click="updateProfessor()">Update Professor Information</button>
+        <input type=text class="form-control" v-model="professor.subject" />
+      <button v-on:click="updateProfessor()">Update Professor</button>
+      </form>
     </dialog>
+
     <a href="https://clearbit.com" class="credits">Logos provided by Clearbit</a>
   </div>
 
@@ -234,14 +230,15 @@
 }
 
 .professor-reviews {
-  margin-top: 2rem;
+  width: 100%;
+  margin: 3rem 0 0;
 }
 
 .professor-reviews ul {
-  width: 80%;
   list-style: none;
   margin: 0 auto;
   text-align: right;
+  padding: 0 10%;
   padding-inline-start: 0;
 }
 
@@ -255,7 +252,7 @@
 }
 
 .progress-bar {
-  width: 220px;
+  width: 65%;
   display: inline-block;
   background-color: lightgray;
   border-radius: 6px;
@@ -264,10 +261,18 @@
 }
 
 .progress-fill {
-  background-color: #dc9731;
+  background-color: #9289c2;
   /* width: 75%; */
-  height: 5px;
+  height: 4.5px;
   border-radius: 6px;
+}
+
+#professor-edit-btn {
+  display: block;
+  color: #cccccc;
+  padding-left: 0px;
+  font-weight: 400;
+  margin: 3rem auto 0 auto;
 }
 
 .reviews {
@@ -360,7 +365,7 @@ button i {
 
 dialog {
   font-family: "Lato", sans-serif;
-  height: 80%;
+  height: 90%;
   width: 600px;
   text-transform: uppercase;
   border-radius: 10px;
@@ -372,6 +377,10 @@ dialog {
 
 .reviewedit {
   height: 30%;
+}
+
+form label {
+  padding-bottom: 0.5em;
 }
 
 dialog form {
@@ -401,6 +410,13 @@ dialog .star-rater {
 
 .reviewnew star-rating {
   text-align: center;
+}
+
+.star-score {
+  font-weight: bold;
+  font-size: 2em;
+  line-height: 1em;
+  font-size: 5em;
 }
 
 .dialog-button {
@@ -469,7 +485,7 @@ export default {
         author: this.newReviewAuthor,
         text: this.newReviewText,
         score: this.newReviewScore,
-        professor_id: this.currentProfessor.id,
+        professor_id: this.professor.id,
       };
       axios
         .post("/reviews", params)
@@ -494,37 +510,39 @@ export default {
     },
     updateReview: function () {
       var params = {
-        id: this.currentReview.id,
+        author: this.currentReview.author,
+        date: this.currentReview.date,
         text: this.currentReview.text,
         score: this.currentReview.score,
+        professor_id: this.currentReview.professor_id,
       };
       axios
         .put(`/reviews/${this.currentReview.id}`, params)
         .then((response) => {
-          console.log("");
+          this.$router.push(`/professors/${this.professor.id}`);
         });
     },
     editProfessor: function (professor) {
       this.currentProfessor = professor;
       document.querySelector("#professor-edit").showModal();
     },
-    // updateProfessor: function(id) {
-    //   var params = {
-    //     name: this.professor.name,
-    //     title: this.professor.title,
-    //     school: this.professor.school,
-    //     department: this.professor.department,
-    //     subject: this.professor.subject
-    //   };
-    //   axios
-    //     .patch(`professor/${id}`, params)
-    //     .then(response => {
-    //       this.$router.push(`/professors/${id}`);
-    //     })
-    //     .catch(error => {
-    //       this.error = error.response.data.errors;
-    //     });
-    // },
+    updateProfessor: function (id) {
+      var params = {
+        name: this.professor.name,
+        title: this.professor.title,
+        school: this.professor.school,
+        department: this.professor.department,
+        subject: this.professor.subject,
+      };
+      axios
+        .put(`/professors/${this.professor.id}`, params)
+        .then((response) => {
+          this.$router.push(`/professors/${this.professor.id}`);
+        })
+        .catch((error) => {
+          this.error = error.response.data.errors;
+        });
+    },
     deleteProfessor: function (id) {
       if (confirm("Are you sure you want to delete this entry?")) {
         axios.delete(`professors/${id}`).then((response) => {
@@ -580,6 +598,9 @@ export default {
         console.log("Score", (count / this.reviews.length) * 100);
       });
       return (count / this.reviews.length) * 100;
+    },
+    setRating: function (rating) {
+      this.newReviewScore = rating;
     },
   },
 };
