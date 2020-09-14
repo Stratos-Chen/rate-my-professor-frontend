@@ -33,10 +33,29 @@
               Name<i class="material-icons">arrow_drop_down</i>
             </button>
           </td>
-          <td style="width:200px">Title</td>
-          <td style="width:300px">School</td>
-          <td style="width:200px">Department</td>
-          <td style="width:200px">subject</td>
+          <td style="width:200px">
+            <button class="btn-tertiary" v-on:click="sortProfessorByTitle()">
+              Title<i class="material-icons">arrow_drop_down</i>
+            </button>
+          </td>
+          <td style="width:300px">
+            <button class="btn-tertiary" v-on:click="sortProfessorBySchool()">
+              School<i class="material-icons">arrow_drop_down</i>
+            </button>
+          </td>
+          <td style="width:200px">
+            <button
+              class="btn-tertiary"
+              v-on:click="sortProfessorByDepartment()"
+            >
+              Department<i class="material-icons">arrow_drop_down</i>
+            </button>
+          </td>
+          <td style="width:200px">
+            <button class="btn-tertiary" v-on:click="sortProfessorBySubject()">
+              subject<i class="material-icons">arrow_drop_down</i>
+            </button>
+          </td>
           <td style="width: 85px">Action</td>
         </tr>
       </table>
@@ -245,7 +264,7 @@ import axios from "axios";
 import Vue2Filters from "vue2-filters";
 export default {
   mixins: [Vue2Filters.mixin],
-  data: function () {
+  data: function() {
     return {
       professors: [],
       nameFilter: "",
@@ -261,19 +280,23 @@ export default {
       department: "",
       subject: "",
       nameSort: 1,
+      titleSort: 1,
+      schoolSort: 1,
+      departmentSort: 1,
+      subjectSort: 1,
     };
   },
-  created: function () {
+  created: function() {
     axios.get("/professors").then((response) => {
       console.log("All Professors:", response.data);
       this.professors = response.data;
     });
   },
   methods: {
-    addProfessor: function () {
+    addProfessor: function() {
       document.querySelector("#professor-new").showModal();
     },
-    createProfessor: function () {
+    createProfessor: function() {
       var params = {
         name: this.newProfessorName,
         title: this.newProfessorTitle,
@@ -290,7 +313,7 @@ export default {
           console.log(error.response.data.errors);
         });
     },
-    deleteProfessor: function (id) {
+    deleteProfessor: function(id) {
       if (confirm("Are you sure you want to delete this professor?")) {
         axios.delete(`/professors/${id}`).then((response) => {
           console.log("Professor Deleted", response.data);
@@ -298,17 +321,77 @@ export default {
         });
       }
     },
-    sortProfessorByName: function () {
+    sortProfessorByName: function() {
       if (this.nameSort === 1) {
         this.nameSort = -1;
-        this.professors.sort(function (a, b) {
+        this.professors.sort(function(a, b) {
           var result = a.name.localeCompare(b.name);
           return result;
         });
       } else if (this.nameSort === -1) {
         this.nameSort = 1;
-        this.professors.sort(function (b, a) {
+        this.professors.sort(function(b, a) {
           var result = a.name.localeCompare(b.name);
+          return result;
+        });
+      }
+    },
+    sortProfessorByTitle: function() {
+      if (this.titleSort === 1) {
+        this.titleSort = -1;
+        this.professors.sort(function(a, b) {
+          var result = a.title.localeCompare(b.title);
+          return result;
+        });
+      } else if (this.titleSort === -1) {
+        this.titleSort = 1;
+        this.professors.sort(function(b, a) {
+          var result = a.title.localeCompare(b.title);
+          return result;
+        });
+      }
+    },
+    sortProfessorBySchool: function() {
+      if (this.schoolSort === 1) {
+        this.schoolSort = -1;
+        this.professors.sort(function(a, b) {
+          var result = a.school.localeCompare(b.school);
+          return result;
+        });
+      } else if (this.schoolSort === -1) {
+        this.schoolSort = 1;
+        this.professors.sort(function(b, a) {
+          var result = a.school.localeCompare(b.school);
+          return result;
+        });
+      }
+    },
+    sortProfessorByDepartment: function() {
+      if (this.departmentSort === 1) {
+        this.departmentSort = -1;
+        this.professors.sort(function(a, b) {
+          var result = a.department.localeCompare(b.department);
+          return result;
+        });
+      } else if (this.departmentSort === -1) {
+        this.departmentSort = 1;
+        this.professors.sort(function(b, a) {
+          var result = a.department.localeCompare(b.department);
+          return result;
+        });
+      }
+    },
+    sortProfessorBySubject: function() {
+      if (this.subjectSort === 1) {
+        this.subjectSort = -1;
+        this.professors.sort(function(a, b) {
+          var result = a.subject.localeCompare(b.subject);
+          return result;
+        });
+      } else if (this.subjectSort === -1) {
+        this.subjectSort = 1;
+        this.professors.sort(function(b, a) {
+          var result = a.subject.localeCompare(b.subject);
           return result;
         });
       }
