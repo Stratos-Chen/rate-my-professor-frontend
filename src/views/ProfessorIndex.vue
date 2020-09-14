@@ -25,7 +25,11 @@
     <div class="professor-table">
       <table class="professor-labels" style="width:100%;">
         <tr>
-          <td style="width:250px">Name</td>
+          <td style="width:250px">
+            <button class="btn-tertiary" v-on:click="sortProfessorByName()">
+              Name<i class="material-icons">arrow_drop_down</i>
+            </button>
+          </td>
           <td style="width:200px">Title</td>
           <td style="width:300px">School</td>
           <td style="width:200px">Department</td>
@@ -138,8 +142,7 @@ button i {
 }
 
 .btn-tertiary {
-  font-size: 0.6em;
-  color: #cccccc;
+  font-size: 1.2em;
 }
 
 .professor-table {
