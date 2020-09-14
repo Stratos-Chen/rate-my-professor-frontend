@@ -59,6 +59,7 @@
           <td style="width: 85px">
             <button
               class="btn-tertiary"
+              id="delete-professor-btn"
               style="width:100px"
               v-on:click="deleteProfessor(professor.id)"
             >
@@ -107,9 +108,9 @@
 }
 
 .searchbar {
-  margin: 3rem auto 0 auto;
+  margin: 4.5rem auto 0 auto;
   text-align: left;
-  width: 60%;
+  width: 1000px;
 }
 
 .searchbar h1 {
@@ -119,15 +120,17 @@
 
 .searchbar input {
   display: inline-block;
-  width: 60%;
+  width: 70%;
   height: 2;
   font-size: 1.9em;
 }
 
 .search-button {
   display: inline-block;
-  margin: 0 2rem 2rem 2rem;
+  margin: 0 2rem;
+  transform: translateY(-6px);
   width: 100px;
+  height: 45px;
   color: rgb(48, 48, 48);
   background: linear-gradient(
     90deg,
@@ -157,6 +160,11 @@ button i {
 
 .btn-tertiary {
   font-size: 1.2em;
+}
+
+#delete-professor-btn {
+  font-size: 0.7em;
+  color: #cccccc;
 }
 
 .professor-table {
@@ -191,6 +199,44 @@ td {
 
 .professor-information tr:nth-child(even) {
   background: #919191;
+}
+
+dialog {
+  font-family: "Avenir", sans-serif;
+  height: 95%;
+  width: 600px;
+  text-transform: uppercase;
+  border-radius: 10px;
+  border-width: 0px;
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.071),
+    0 20px 40px -20px rgba(0, 0, 0, 0.4), 0 70px 50px -30px rgba(0, 0, 0, 0.05),
+    0 30px 60px -5px rgba(203, 14, 39, 0.036);
+}
+
+.reviewedit {
+  height: 30%;
+}
+
+form label {
+  padding-bottom: 0.5em;
+}
+
+dialog form {
+  /* align-content: left; */
+  text-align: left;
+  line-height: 5em;
+}
+
+dialog input,
+dialog textarea {
+  width: 100%;
+  display: block;
+  height: 2em;
+  background-color: #ededed;
+  border-radius: 6px;
+  border-style: none;
+  align-items: top;
+  font-size: 1.3em;
 }
 </style>
 
@@ -251,14 +297,19 @@ export default {
         });
       }
     },
-    // sortProfessorByName: function() {
-    //   this.sortVariable = "name";
-    //   if (this.professorSort === 1) {
-    //     this.professorSort = -1;
-    //   } else if (this.professorSort === -1) {
-    //     this.professorSort = 1;
-    //   }
-    // },
+    sortProfessorByName: function () {
+      this.professors = this.professors.sort(function (a, b) {
+        return a.name.localeCompare(b.name);
+      });
+      console.log(this.professors);
+    },
+
+    // this.sortVariable = "name";
+    // if (this.professorSort === 1) {
+    //   this.professorSort = -1;
+    // } else if (this.professorSort === -1) {
+    //   this.professortSort = 1;
+    // }
   },
 };
 </script>
