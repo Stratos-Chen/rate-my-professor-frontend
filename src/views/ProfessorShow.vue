@@ -74,11 +74,14 @@
         <h2>REVIEWS</h2><br>
         <div class=buttonholder>
           <button class="btn-tertiary" style="color:#505050;" v-on:click="sortScoreReview()">Score<i class="material-icons" >arrow_drop_down</i></button>
+
           <button class="btn-tertiary" style="color:#505050;" v-on:click="sortDateReview()">Date<i class="material-icons">arrow_drop_down</i></button>
+          
           <button class="btn-tertiary" v-on:click="filterArray()">Stars ({{ratingFilter}})<i class="material-icons">arrow_drop_down</i></button>
           <button class="btn-primary" v-on:click="addReview()"><i class="material-icons" style="font-size:1.2em;font-weight:900;">add</i>Add Review</button>
         </div>
       </div>
+      
       <div class="review-index" v-for="review in  orderBy(reviewDisplay, sortVariable, reviewSort)">
 
         <h4>{{ review.author }} - {{ review.date | moment('MMM DD, YYYY')}}</h4>
