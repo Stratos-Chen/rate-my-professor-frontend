@@ -1,7 +1,5 @@
 <template>
   <div class="Professor Index">
-    
-    
     <form role="search" method="get" class="search-form" action="">
       <label>
         <span class="screen-reader-text">Search for:</span>
@@ -15,43 +13,45 @@
 
     <!-- Professor Index -->
     <div class="professor-table">
-    
-    <table class ="professor-labels" style="width:100%;">
-      <tr>
-        <td style="width:250px">Name</td>
-        <td style="width:200px">Title</td>
-        <td style="width:300px">School</td>
-        <td style="width:200px">Department</td>
-        <td style="width:200px">subject</td>
-        <td style="width: 85px">Action</td>
-      </tr>
-    </table>
+      <table class="professor-labels" style="width:100%;">
+        <tr>
+          <td style="width:250px" onclick="sortProfessorByName()">
+            Name<i class="material-icons">arrow_drop_down</i>
+          </td>
+          <td style="width:200px">Title</td>
+          <td style="width:300px">School</td>
+          <td style="width:200px">Department</td>
+          <td style="width:200px">subject</td>
+          <td style="width: 85px">Action</td>
+        </tr>
+      </table>
 
-    <table class="professor-information"
-      v-for="professor in filterBy(professors, nameFilter, 'name')"
-      style="width:100%;"
-    >
-      <tr>
-        <td style="width:250px">
-          <router-link v-bind:to="`/professors/${professor.id}`">{{
-            professor.name
-          }}</router-link>
-        </td>
-        <td style="width:200px">{{ professor.title }}</td>
-        <td style="width:300px">{{ professor.school }}</td>
-        <td style="width:200px">{{ professor.department }}</td>
-        <td style="width:200px">{{ professor.subject }}</td>
-        <td style="width: 85px">
-        <button
-          class="btn-secondary"
-          style="width:100px"
-          v-on:click="deleteProfessor(professor.id)"
-        >
-          Delete Professor
-        </button>
-        </td>
-      </tr>
-    </table>
+      <table
+        class="professor-information"
+        v-for="professor in filterBy(professors, nameFilter, 'name')"
+        style="width:100%;"
+      >
+        <tr>
+          <td style="width:250px">
+            <router-link v-bind:to="`/professors/${professor.id}`">{{
+              professor.name
+            }}</router-link>
+          </td>
+          <td style="width:200px">{{ professor.title }}</td>
+          <td style="width:300px">{{ professor.school }}</td>
+          <td style="width:200px">{{ professor.department }}</td>
+          <td style="width:200px">{{ professor.subject }}</td>
+          <td style="width: 85px">
+            <button
+              class="btn-secondary"
+              style="width:100px"
+              v-on:click="deleteProfessor(professor.id)"
+            >
+              Delete Professor
+            </button>
+          </td>
+        </tr>
+      </table>
     </div>
 
     <!-- New Professor Entry -->
@@ -119,7 +119,7 @@ import axios from "axios";
 import Vue2Filters from "vue2-filters";
 export default {
   mixins: [Vue2Filters.mixin],
-  data: function () {
+  data: function() {
     return {
       professors: [],
       nameFilter: "",
@@ -134,19 +134,21 @@ export default {
       school: "",
       department: "",
       subject: "",
+      sortVariable: "",
+      professorSort: 1,
     };
   },
-  created: function () {
+  created: function() {
     axios.get("/professors").then((response) => {
       console.log("All Professors:", response.data);
       this.professors = response.data;
     });
   },
   methods: {
-    addProfessor: function () {
+    addProfessor: function() {
       document.querySelector("#professor-new").showModal();
     },
-    createProfessor: function () {
+    createProfessor: function() {
       var params = {
         name: this.newProfessorName,
         title: this.newProfessorTitle,
@@ -163,12 +165,20 @@ export default {
           console.log(error.response.data.errors);
         });
     },
-    deleteProfessor: function (id) {
+    deleteProfessor: function(id) {
       if (confirm("Are you sure you want to delete this professor?")) {
         axios.delete(`/professors/${id}`).then((response) => {
           console.log("Professor Deleted", response.data);
           this.$router.push("/professors");
         });
+      }
+    },
+    sortProfessorByName: function() {
+      this.sortVariable = "name";
+      if (this.professorSort === 1) {
+        this.professorSort = -1;
+      } else if (this.professorSort === -1) {
+        this.professortSort = 1;
       }
     },
   },
