@@ -20,6 +20,41 @@
           <h6>{{ professor.department }}</h6>
           <p>{{ professor.subject }}</p>
         </div>
+        
+      </div>
+      <div class="professor-reviews">
+        <ul>  
+          <li><i class="material-icons" >star</i><i class="material-icons" >star</i><i class="material-icons" >star</i><i class="material-icons" >star</i><i class="material-icons" >star</i>
+            <div class="progress-bar">
+              <div class="progress-fill" :style="`width:${reviewPercentage(5)}%;`">
+              </div>
+            </div>
+          </li>
+          <li><i class="material-icons" >star</i><i class="material-icons" >star</i><i class="material-icons" >star</i><i class="material-icons" >star</i> 
+            <div class="progress-bar">
+              <div class="progress-fill" :style="`width:${reviewPercentage(4)}%;`">
+              </div>
+            </div>
+          </li>
+          <li><i class="material-icons" >star</i><i class="material-icons" >star</i><i class="material-icons" >star</i>
+            <div class="progress-bar">
+              <div class="progress-fill" :style="`width:${reviewPercentage(3)}%;`">
+              </div>
+            </div>
+          </li>
+          <li><i class="material-icons" >star</i><i class="material-icons" >star</i>
+            <div class="progress-bar">
+              <div class="progress-fill" :style="`width:${reviewPercentage(2)}%;`">
+              </div>
+            </div>
+          </li>
+          <li><i class="material-icons" >star</i>
+            <div class="progress-bar">
+              <div class="progress-fill" :style="`width:${reviewPercentage(1)}%;`">
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
 
@@ -121,7 +156,9 @@
   border-radius: 7px;
   vertical-align: top;
   letter-spacing: 0.18em;
-  box-shadow: 6px 14px 29px 0px rgba(41, 41, 41, 0.08);
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.071),
+    0 20px 40px -20px rgba(0, 0, 0, 0.4), 0 70px 50px -30px rgba(0, 0, 0, 0.05),
+    0 30px 60px -5px rgba(203, 14, 39, 0.036);
   /* line-height: 1.33em; */
 }
 
@@ -158,7 +195,8 @@
   height: 54px;
   width: 54px;
   margin: 4rem auto 0rem auto;
-  box-shadow: 4px 6px 13px 0px rgba(41, 41, 41, 0.427);
+  box-shadow: 4px 6px 6px -3px rgba(41, 41, 41, 0.25),
+    6px 8px 8px -4px rgba(41, 41, 41, 0.25);
 }
 
 .professor-details {
@@ -185,6 +223,43 @@
   line-height: 0em;
 }
 
+.professor-reviews {
+  margin-top: 2rem;
+}
+
+.professor-reviews ul {
+  width: 80%;
+  list-style: none;
+  margin: 0 auto;
+  text-align: right;
+  padding-inline-start: 0;
+}
+
+.professor-reviews li {
+  margin: 0 auto;
+  font-size: 1em;
+}
+
+.professor-reviews li i {
+  font-size: 1em;
+}
+
+.progress-bar {
+  width: 220px;
+  display: inline-block;
+  background-color: lightgray;
+  border-radius: 6px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+
+.progress-fill {
+  background-color: #dc9731;
+  /* width: 75%; */
+  height: 5px;
+  border-radius: 6px;
+}
+
 .reviews {
   display: inline-block;
   width: 45%;
@@ -193,7 +268,10 @@
   margin: 2.5em;
   background-color: #ffffff;
   border-radius: 7px;
-  box-shadow: 8px 20px 33px 0px rgba(41, 41, 41, 0.08);
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.071),
+    0 20px 40px -20px rgba(0, 0, 0, 0.4), 0 70px 50px -30px rgba(0, 0, 0, 0.05),
+    0 30px 60px -5px rgba(203, 14, 39, 0.036);
+  /* box-shadow: 8px 20px 33px 0px rgba(41, 41, 41, 0.08); */
 }
 
 .reviews h4 {
@@ -436,6 +514,16 @@ export default {
       this.reviewDisplay = this.reviewDisplay.filter(
         (index) => index["score"] >= this.ratingFilter
       );
+    },
+    reviewPercentage: function (rating) {
+      var count = 0;
+      this.reviews.forEach((review) => {
+        if (review.score >= rating && review.score < rating + 1) {
+          count++;
+        }
+        console.log("Score", (count / this.reviews.length) * 100);
+      });
+      return (count / this.reviews.length) * 100;
     },
   },
 };
