@@ -5,12 +5,6 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <form role="search" method="get" class="search-form" action="">
-      <label>
-        <span class="screen-reader-text">Search for:</span>
-        <input type="search" v-model="nameFilter" class="search-field" />
-      </label>
-    </form>
     <router-view />
   </div>
 </template>
@@ -46,10 +40,7 @@ tr,
 td {
   border: 1px solid black;
   border-collapse: collapse;
-}
-table.center {
-  margin-left: auto;
-  margin-right: auto;
+  background-color: floralwhite;
 }
 body {
   background-color: #ededed;
