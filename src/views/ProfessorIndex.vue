@@ -6,7 +6,8 @@
         <h3>Get their grade before you get the grade</h3>
         <form role="search" method="get" class="search-form" action="">
           <label>
-            <span class="screen-reader-text">Search for:</span>
+            
+            <span class="screen-reader-text"></span>
             <input type="search" v-model="nameFilter" class="search-field" />
             <button class="search-button">
               Search
@@ -18,9 +19,13 @@
     </div>
 
     <button class="add-professor-button" v-on:click="addProfessor()">
-      Add Professor
-    </button>
-
+      <i class="material-icons">
+          school
+      </i>
+       Add Professor
+      </button>
+        
+      
     <!-- Professor Index -->
     <div class="professor-table">
       <table class="professor-labels" style="width:100%;">
@@ -116,12 +121,13 @@
 
 .searchbar input {
   display: inline-block;
-  width: 80%;
+  width: 60%;
   height: 2;
   font-size: 1.9em;
 }
 
 .search-button {
+  display: inline-block;
   margin: 0 2rem 2rem 2rem;
   width: 100px;
   color: rgb(48, 48, 48);
@@ -130,11 +136,21 @@
     rgba(244, 247, 40, 1) 0%,
     rgba(255, 160, 0, 1) 100%
   );
+  box-shadow: 4px 6px 6px -3px rgba(41, 41, 41, 0.25),
+    6px 8px 8px -4px rgba(41, 41, 41, 0.25);
 }
 
 .add-professor-button {
-  margin-top: 1rem;
-  padding: 0.5em;
+  margin-top: 3rem;
+  padding: 0.75em;
+}
+
+.add-professor-button i {
+  padding-right: 0.5em;
+}
+
+.add-professor-button:hover {
+  background-color: #a4c2ff;
 }
 
 button i {
@@ -185,7 +201,7 @@ import axios from "axios";
 import Vue2Filters from "vue2-filters";
 export default {
   mixins: [Vue2Filters.mixin],
-  data: function() {
+  data: function () {
     return {
       professors: [],
       nameFilter: "",
@@ -204,17 +220,17 @@ export default {
       professorSort: 1,
     };
   },
-  created: function() {
+  created: function () {
     axios.get("/professors").then((response) => {
       console.log("All Professors:", response.data);
       this.professors = response.data;
     });
   },
   methods: {
-    addProfessor: function() {
+    addProfessor: function () {
       document.querySelector("#professor-new").showModal();
     },
-    createProfessor: function() {
+    createProfessor: function () {
       var params = {
         name: this.newProfessorName,
         title: this.newProfessorTitle,
@@ -231,7 +247,7 @@ export default {
           console.log(error.response.data.errors);
         });
     },
-    deleteProfessor: function(id) {
+    deleteProfessor: function (id) {
       if (confirm("Are you sure you want to delete this professor?")) {
         axios.delete(`/professors/${id}`).then((response) => {
           console.log("Professor Deleted", response.data);
@@ -239,7 +255,7 @@ export default {
         });
       }
     },
-    sortProfessorByName: function() {
+    sortProfessorByName: function () {
       this.sortVariable = "name";
       if (this.professorSort === 1) {
         this.professorSort = -1;
