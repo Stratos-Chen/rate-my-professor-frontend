@@ -1,21 +1,32 @@
 <template>
   <div class="Professor Index">
     
-    
-    <form role="search" method="get" class="search-form" action="">
-      <label>
-        <span class="screen-reader-text">Search for:</span>
-        <input type="search" v-model="nameFilter" class="search-field" />
-      </label>
-    </form>
-    <br />
-    <button class="dialog-button" v-on:click="addProfessor()">
-      Add Professor
-    </button>
+    <div class="header">
+      <div class="searchbar">
+        <h1>Grade My Professor</h1>
+        <h3>Get their grade before you get the grade</h3>
+        <form role="search" method="get" class="search-form" action="">
+          <label>
+            
+            <span class="screen-reader-text">Search for:</span>
+            <input type="search" v-model="nameFilter" class="search-field" />
+            <button class="search-button">
+              Search
+            </button>
+          </label>
+        </form>
+        <br />
 
+      </div>
+    </div>
+
+    <button class="add-professor-button" v-on:click="addProfessor()">
+       Add Professor
+      </button>
+        
+      
     <!-- Professor Index -->
     <div class="professor-table">
-    
     <table class ="professor-labels" style="width:100%;">
       <tr>
         <td style="width:250px">Name</td>
@@ -43,11 +54,14 @@
         <td style="width:200px">{{ professor.subject }}</td>
         <td style="width: 85px">
         <button
-          class="btn-secondary"
+          class="btn-tertiary"
           style="width:100px"
           v-on:click="deleteProfessor(professor.id)"
         >
-          Delete Professor
+          <i class="material-icons">
+          delete_outline
+          </i>
+          Delete
         </button>
         </td>
       </tr>
@@ -79,6 +93,58 @@
 </template>
 
 <style scoped>
+.header {
+  display: inline-block;
+  height: 250px;
+  width: 100%;
+  background: rgb(54, 54, 80);
+  color: white;
+  align-content: middle;
+}
+
+.searchbar {
+  margin: 3rem auto 0 auto;
+  text-align: left;
+  width: 60%;
+}
+
+.searchbar h1 {
+  font-size: 3em;
+  line-height: 0em;
+}
+
+.searchbar input {
+  display: inline-block;
+  width: 80%;
+  height: 2;
+  font-size: 1.9em;
+}
+
+.search-button {
+  margin: 0 2rem 2rem 2rem;
+  width: 100px;
+  color: rgb(48, 48, 48);
+  background: linear-gradient(
+    90deg,
+    rgba(244, 247, 40, 1) 0%,
+    rgba(255, 160, 0, 1) 100%
+  );
+}
+
+.add-professor-button {
+  margin-top: 1rem;
+  padding: 0.5em;
+}
+
+button i {
+  vertical-align: middle;
+}
+
+.btn-tertiary {
+  font-size: 0.6em;
+  color: #cccccc;
+}
+
 .professor-table {
   width: 90%;
   margin: 5rem auto;

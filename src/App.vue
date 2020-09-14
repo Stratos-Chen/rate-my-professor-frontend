@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <h1>Rate My Professor</h1>
-    <div id="nav">
+    <!-- <h1>Rate My Professor</h1> -->
+    <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
-    </div>
+    </div> -->
     <router-view />
   </div>
 </template>
@@ -65,5 +65,38 @@ body {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+button {
+  background-color: #73a2fd;
+  font-family: "Avenir", sans-serif;
+  font-weight: 700;
+  border-radius: 3px;
+  border-style: none;
+  padding: 0.6rem;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+  outline: none;
+}
+
+.btn-primary:hover {
+  background-color: #a4c2ff;
+}
+
+.btn-secondary {
+  background-color: #cccccc;
+}
+
+.btn-tertiary {
+  background-color: rgba(0, 0, 0, 0);
+  color: #505050;
+}
+
+.btn-tertiary:hover {
+  color: #999999 !important;
+}
+.btn-tertiary:active {
+  border-color: white;
 }
 </style>
