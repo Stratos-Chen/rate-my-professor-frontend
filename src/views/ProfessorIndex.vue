@@ -37,7 +37,7 @@
           <td style="width:300px">School</td>
           <td style="width:200px">Department</td>
           <td style="width:200px">subject</td>
-          <td style="width: 85px">Action</td>
+          <td style="width: 120px"></td>
         </tr>
       </table>
 
@@ -56,7 +56,7 @@
           <td style="width:300px">{{ professor.school }}</td>
           <td style="width:200px">{{ professor.department }}</td>
           <td style="width:200px">{{ professor.subject }}</td>
-          <td style="width: 85px">
+          <td style="width: 120px">
             <button
               class="btn-tertiary"
               id="delete-professor-btn"
@@ -120,7 +120,7 @@
 
 .searchbar input {
   display: inline-block;
-  width: 70%;
+  width: 75%;
   height: 2;
   font-size: 1.9em;
 }
