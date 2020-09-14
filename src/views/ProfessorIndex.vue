@@ -6,7 +6,6 @@
         <h3>Get their grade before you get the grade</h3>
         <form role="search" method="get" class="search-form" action="">
           <label>
-            
             <span class="screen-reader-text"></span>
             <input type="search" v-model="nameFilter" class="search-field" />
             <button class="search-button">
@@ -20,12 +19,11 @@
 
     <button class="add-professor-button" v-on:click="addProfessor()">
       <i class="material-icons">
-          school
+        school
       </i>
-       Add Professor
-      </button>
-        
-      
+      Add Professor
+    </button>
+
     <!-- Professor Index -->
     <div class="professor-table">
       <table class="professor-labels" style="width:100%;">
@@ -247,7 +245,7 @@ import axios from "axios";
 import Vue2Filters from "vue2-filters";
 export default {
   mixins: [Vue2Filters.mixin],
-  data: function () {
+  data: function() {
     return {
       professors: [],
       nameFilter: "",
@@ -262,21 +260,19 @@ export default {
       school: "",
       department: "",
       subject: "",
-      sortVariable: "",
-      professorSort: 1,
     };
   },
-  created: function () {
+  created: function() {
     axios.get("/professors").then((response) => {
       console.log("All Professors:", response.data);
       this.professors = response.data;
     });
   },
   methods: {
-    addProfessor: function () {
+    addProfessor: function() {
       document.querySelector("#professor-new").showModal();
     },
-    createProfessor: function () {
+    createProfessor: function() {
       var params = {
         name: this.newProfessorName,
         title: this.newProfessorTitle,
@@ -293,7 +289,7 @@ export default {
           console.log(error.response.data.errors);
         });
     },
-    deleteProfessor: function (id) {
+    deleteProfessor: function(id) {
       if (confirm("Are you sure you want to delete this professor?")) {
         axios.delete(`/professors/${id}`).then((response) => {
           console.log("Professor Deleted", response.data);
