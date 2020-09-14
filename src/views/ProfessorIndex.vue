@@ -1,6 +1,5 @@
 <template>
   <div class="Professor Index">
-    
     <div class="header">
       <div class="searchbar">
         <h1>Grade My Professor</h1>
@@ -16,7 +15,6 @@
           </label>
         </form>
         <br />
-
       </div>
     </div>
 
@@ -30,45 +28,46 @@
       
     <!-- Professor Index -->
     <div class="professor-table">
-    <table class ="professor-labels" style="width:100%;">
-      <tr>
-        <td style="width:250px">Name</td>
-        <td style="width:200px">Title</td>
-        <td style="width:300px">School</td>
-        <td style="width:200px">Department</td>
-        <td style="width:200px">subject</td>
-        <td style="width: 85px">Action</td>
-      </tr>
-    </table>
+      <table class="professor-labels" style="width:100%;">
+        <tr>
+          <td style="width:250px">Name</td>
+          <td style="width:200px">Title</td>
+          <td style="width:300px">School</td>
+          <td style="width:200px">Department</td>
+          <td style="width:200px">subject</td>
+          <td style="width: 85px">Action</td>
+        </tr>
+      </table>
 
-    <table class="professor-information"
-      v-for="professor in filterBy(professors, nameFilter, 'name')"
-      style="width:100%;"
-    >
-      <tr>
-        <td style="width:250px">
-          <router-link v-bind:to="`/professors/${professor.id}`">{{
-            professor.name
-          }}</router-link>
-        </td>
-        <td style="width:200px">{{ professor.title }}</td>
-        <td style="width:300px">{{ professor.school }}</td>
-        <td style="width:200px">{{ professor.department }}</td>
-        <td style="width:200px">{{ professor.subject }}</td>
-        <td style="width: 85px">
-        <button
-          class="btn-tertiary"
-          style="width:100px"
-          v-on:click="deleteProfessor(professor.id)"
-        >
-          <i class="material-icons">
-          delete_outline
-          </i>
-          Delete
-        </button>
-        </td>
-      </tr>
-    </table>
+      <table
+        class="professor-information"
+        v-for="professor in filterBy(professors, nameFilter, 'name')"
+        style="width:100%;"
+      >
+        <tr>
+          <td style="width:250px">
+            <router-link v-bind:to="`/professors/${professor.id}`">{{
+              professor.name
+            }}</router-link>
+          </td>
+          <td style="width:200px">{{ professor.title }}</td>
+          <td style="width:300px">{{ professor.school }}</td>
+          <td style="width:200px">{{ professor.department }}</td>
+          <td style="width:200px">{{ professor.subject }}</td>
+          <td style="width: 85px">
+            <button
+              class="btn-tertiary"
+              style="width:100px"
+              v-on:click="deleteProfessor(professor.id)"
+            >
+              <i class="material-icons">
+                delete_outline
+              </i>
+              Delete
+            </button>
+          </td>
+        </tr>
+      </table>
     </div>
 
     <!-- New Professor Entry -->
@@ -214,6 +213,8 @@ export default {
       school: "",
       department: "",
       subject: "",
+      sortVariable: "",
+      professorSort: 1,
     };
   },
   created: function () {
@@ -249,6 +250,14 @@ export default {
           console.log("Professor Deleted", response.data);
           this.$router.push("/professors");
         });
+      }
+    },
+    sortProfessorByName: function () {
+      this.sortVariable = "name";
+      if (this.professorSort === 1) {
+        this.professorSort = -1;
+      } else if (this.professorSort === -1) {
+        this.professortSort = 1;
       }
     },
   },
