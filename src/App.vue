@@ -41,6 +41,16 @@
   font-feature-settings: "liga";
 }
 
+table,
+tr,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
 body {
   background-color: #ededed;
   font-family: "Lato", sans-serif;
