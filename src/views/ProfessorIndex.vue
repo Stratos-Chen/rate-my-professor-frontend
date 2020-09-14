@@ -12,7 +12,11 @@
 
     <table v-for="professor in filterBy(professors, nameFilter, 'name')">
       <tr>
-        <td>{{ professor.name }}</td>
+        <td>
+          <router-link v-bind:to="`/professors/${professor.id}`">{{
+            professor.name
+          }}</router-link>
+        </td>
         <td>{{ professor.title }}</td>
         <td>{{ professor.school }}</td>
         <td>{{ professor.department }}</td>
