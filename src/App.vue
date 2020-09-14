@@ -1,10 +1,17 @@
 <template>
   <div id="app">
+    <h1>Rate My Professor</h1>
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view/>
+    <form role="search" method="get" class="search-form" action="">
+      <label>
+        <span class="screen-reader-text">Search for:</span>
+        <input type="search" v-model="nameFilter" class="search-field" />
+      </label>
+    </form>
+    <router-view />
   </div>
 </template>
 
@@ -34,6 +41,16 @@
   font-feature-settings: "liga";
 }
 
+table,
+tr,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
 body {
   background-color: #ededed;
   font-family: "Lato", sans-serif;
