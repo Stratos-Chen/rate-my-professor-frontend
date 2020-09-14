@@ -22,7 +22,7 @@
         </div>
         
       </div>
-      <div class="professor-reviews">
+      <div class="professor-reviews" v-show="this.reviews.length > 0">
         <ul>  
           <li><i class="material-icons" >star</i><i class="material-icons" >star</i><i class="material-icons" >star</i><i class="material-icons" >star</i><i class="material-icons" >star</i>
             <div class="progress-bar">
@@ -90,14 +90,21 @@
     <!-- New Review Modal -->
 
     <dialog id="reviewnew">
+      <h3>New Review: {{ professor.name }} </h3>
       <form id="review-create">
-        Author:<input type ="text" v-model="newReviewAuthor"></input>
-        Text:<input type ="text" v-model="newReviewText"></input>
-        Score:<input type ="number" step="0.5" v-model="newReviewScore"></input>
+       <label>Author:</label>
+       <input type ="text" v-model="newReviewAuthor">
+        <label>Text:</label>
+        <textarea class="review-text" v-model="newReviewText"></textarea>
+        <label>Score:</label>
+        <input type ="number" step="0.5" v-model="newReviewScore">
 
-        <star-rating :increment="0.5"></star-rating>
-        Professor_Id:<input type ="number" v-model="newReviewProfessorId"></input>
-        <button v-on:click="createReview()">Create Review</button>
+        <div class="star-rater">
+          <star-rating :increment="0.5" :star-size="31" :padding="12"></star-rating>
+        </div>
+        
+        
+        <button class="dialog-button" v-on:click="createReview()">Create Review</button>
       </form>
     </dialog>
 
@@ -105,9 +112,12 @@
 
     <dialog id="review-edit">
       <form>
-        Author:<input type ="text" v-model="currentReview.author"></input><br>
-        Text:<input type ="text" style="height: 200px;width: 200px;" v-model="currentReview.text"></input><br>
-        Score:<input type ="number" step="0.5" v-model="currentReview.score"></input><br>
+        <label>Author:</label><input type ="text" v-model="currentReview.author"></input>
+        <label>Text:</label><textarea class="review-text" v-model="currentReview.text"></textarea>
+        <div class="star-rater">
+        <p>Score:    {{ currentReview.score}}</p>
+        <star-rating :increment="0.5" :star-size="31" :padding="12"></star-rating>
+        </div>
         <button v-on:click="updateReview()">Update Review</button><br>
       </form>
     </dialog>
@@ -128,11 +138,11 @@
         <input type="text" class="form-control" v-model="currentProfessor.school" />
       </div>
       <div>
-        <label>Department: </label>
+        <label>Department:</label>
         <input type=text class="form-control" v-model="currentProfessor.department" />
       </div>
       <div>
-        <label>Subject: </label>
+        <label>Subject:</label>
         <input type=text class="form-control" v-model="currentProfessor.subject" />
       </div>
       <button v-on:click="updateProfessor()">Update Professor Information</button>
@@ -349,12 +359,58 @@ button i {
 }
 
 dialog {
-  height: 650px;
-  width: 400px;
+  font-family: "Lato", sans-serif;
+  height: 80%;
+  width: 600px;
+  text-transform: uppercase;
+  border-radius: 10px;
+  border-width: 0px;
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.071),
+    0 20px 40px -20px rgba(0, 0, 0, 0.4), 0 70px 50px -30px rgba(0, 0, 0, 0.05),
+    0 30px 60px -5px rgba(203, 14, 39, 0.036);
+}
+
+.reviewedit {
+  height: 30%;
 }
 
 dialog form {
+  /* align-content: left; */
   text-align: left;
+  line-height: 5em;
+}
+
+dialog input,
+dialog textarea {
+  width: 100%;
+  display: block;
+  height: 2em;
+  background-color: #ededed;
+  border-radius: 6px;
+  border-style: none;
+  align-items: top;
+  font-size: 1.3em;
+}
+
+dialog .star-rater {
+  align-content: center;
+  text-align: center;
+  display: inline-block;
+  width: 600px;
+}
+
+.reviewnew star-rating {
+  text-align: center;
+}
+
+.dialog-button {
+  text-align: center;
+}
+
+.review-text {
+  height: 400px;
+  line-height: 1.6em;
+  overflow: scroll;
 }
 
 .credits {
@@ -413,7 +469,7 @@ export default {
         author: this.newReviewAuthor,
         text: this.newReviewText,
         score: this.newReviewScore,
-        professor_id: this.newReviewProfessorId,
+        professor_id: this.currentProfessor.id,
       };
       axios
         .post("/reviews", params)
