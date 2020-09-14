@@ -12,7 +12,7 @@
             <star-rating v-model="professorScore" :increment="0.1" :star-size="23" :padding="9" active-color="#da952e" :read-only="true" :show-rating="false"></star-rating>
           </div>
         </div>
-        <div class="image"><img :src="`//logo.clearbit.com/${schoolUrl}?size=54`" style="border-radius: 3px;">
+        <div class="image"><img :src="`//logo.clearbit.com/${professor.url}?size=54`" style="border-radius: 3px;">
         </div>
         <p style="text-align: center;">{{ professor.school }}</p>
         <div class="professor-details">
@@ -142,6 +142,8 @@
         <input type=text class="form-control" v-model="professor.department" />
         <label>Subject:</label>
         <input type=text class="form-control" v-model="professor.subject" />
+        <label>URL:</label>
+        <input type=text class="form-control" v-model="professor.url" />
       <button v-on:click="updateProfessor()">Update Professor</button>
       </form>
     </dialog>
@@ -536,6 +538,7 @@ export default {
         school: this.professor.school,
         department: this.professor.department,
         subject: this.professor.subject,
+        url: this.professor.url,
       };
       axios
         .put(`/professors/${this.professor.id}`, params)
@@ -587,7 +590,6 @@ export default {
         this.ratingFilter = 0;
         this.reviewDisplay = this.reviews;
       }
-      console.log(this.ratingFilter);
       this.reviewDisplay = this.reviewDisplay.filter(
         (index) => index["score"] >= this.ratingFilter
       );

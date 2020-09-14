@@ -57,7 +57,7 @@
               subject<i class="material-icons">arrow_drop_down</i>
             </button>
           </td>
-          <td style="width: 85px">Action</td>
+          <td style="width: 120px"></td>
         </tr>
       </table>
 
@@ -147,7 +147,7 @@
 
 .search-button {
   display: inline-block;
-  margin: 0 2rem;
+  margin: 0 1rem;
   transform: translateY(-6px);
   width: 100px;
   height: 45px;
@@ -157,13 +157,15 @@
     rgba(244, 247, 40, 1) 0%,
     rgba(255, 160, 0, 1) 100%
   );
-  box-shadow: 4px 6px 6px -3px rgba(41, 41, 41, 0.25),
-    6px 8px 8px -4px rgba(41, 41, 41, 0.25);
+  box-shadow: 4px 6px 8px -3px rgba(41, 41, 41, 0.297),
+    6px 8px 10px -4px rgba(41, 41, 41, 0.303);
 }
 
 .add-professor-button {
+  font-size: 1.1em;
   margin-top: 3rem;
-  padding: 0.75em;
+  padding-top: 1em;
+  padding-bottom: 0.75em;
 }
 
 .add-professor-button i {
@@ -179,7 +181,8 @@ button i {
 }
 
 .btn-tertiary {
-  font-size: 1.2em;
+  font-size: 1em;
+  padding-left: 0px;
 }
 
 #delete-professor-btn {
@@ -189,10 +192,13 @@ button i {
 
 .professor-table {
   width: 90%;
-  margin: 5rem auto;
+  margin: 4rem auto;
   border-radius: 11px;
   background-color: white;
   padding: 2rem;
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.071),
+    0 20px 40px -20px rgba(0, 0, 0, 0.4), 0 70px 50px -30px rgba(0, 0, 0, 0.05),
+    0 30px 60px -5px rgba(203, 14, 39, 0.036);
 }
 
 table {
@@ -265,7 +271,7 @@ import axios from "axios";
 import Vue2Filters from "vue2-filters";
 export default {
   mixins: [Vue2Filters.mixin],
-  data: function() {
+  data: function () {
     return {
       professors: [],
       nameFilter: "",
@@ -287,17 +293,17 @@ export default {
       subjectSort: 1,
     };
   },
-  created: function() {
+  created: function () {
     axios.get("/professors").then((response) => {
       console.log("All Professors:", response.data);
       this.professors = response.data;
     });
   },
   methods: {
-    addProfessor: function() {
+    addProfessor: function () {
       document.querySelector("#professor-new").showModal();
     },
-    createProfessor: function() {
+    createProfessor: function () {
       var params = {
         name: this.newProfessorName,
         title: this.newProfessorTitle,
@@ -314,7 +320,7 @@ export default {
           console.log(error.response.data.errors);
         });
     },
-    deleteProfessor: function(id) {
+    deleteProfessor: function (id) {
       if (confirm("Are you sure you want to delete this professor?")) {
         axios.delete(`/professors/${id}`).then((response) => {
           console.log("Professor Deleted", response.data);
@@ -322,76 +328,76 @@ export default {
         });
       }
     },
-    sortProfessorByName: function() {
+    sortProfessorByName: function () {
       if (this.nameSort === 1) {
         this.nameSort = -1;
-        this.professors.sort(function(a, b) {
+        this.professors.sort(function (a, b) {
           var result = a.name.localeCompare(b.name);
           return result;
         });
       } else if (this.nameSort === -1) {
         this.nameSort = 1;
-        this.professors.sort(function(b, a) {
+        this.professors.sort(function (b, a) {
           var result = a.name.localeCompare(b.name);
           return result;
         });
       }
     },
-    sortProfessorByTitle: function() {
+    sortProfessorByTitle: function () {
       if (this.titleSort === 1) {
         this.titleSort = -1;
-        this.professors.sort(function(a, b) {
+        this.professors.sort(function (a, b) {
           var result = a.title.localeCompare(b.title);
           return result;
         });
       } else if (this.titleSort === -1) {
         this.titleSort = 1;
-        this.professors.sort(function(b, a) {
+        this.professors.sort(function (b, a) {
           var result = a.title.localeCompare(b.title);
           return result;
         });
       }
     },
-    sortProfessorBySchool: function() {
+    sortProfessorBySchool: function () {
       if (this.schoolSort === 1) {
         this.schoolSort = -1;
-        this.professors.sort(function(a, b) {
+        this.professors.sort(function (a, b) {
           var result = a.school.localeCompare(b.school);
           return result;
         });
       } else if (this.schoolSort === -1) {
         this.schoolSort = 1;
-        this.professors.sort(function(b, a) {
+        this.professors.sort(function (b, a) {
           var result = a.school.localeCompare(b.school);
           return result;
         });
       }
     },
-    sortProfessorByDepartment: function() {
+    sortProfessorByDepartment: function () {
       if (this.departmentSort === 1) {
         this.departmentSort = -1;
-        this.professors.sort(function(a, b) {
+        this.professors.sort(function (a, b) {
           var result = a.department.localeCompare(b.department);
           return result;
         });
       } else if (this.departmentSort === -1) {
         this.departmentSort = 1;
-        this.professors.sort(function(b, a) {
+        this.professors.sort(function (b, a) {
           var result = a.department.localeCompare(b.department);
           return result;
         });
       }
     },
-    sortProfessorBySubject: function() {
+    sortProfessorBySubject: function () {
       if (this.subjectSort === 1) {
         this.subjectSort = -1;
-        this.professors.sort(function(a, b) {
+        this.professors.sort(function (a, b) {
           var result = a.subject.localeCompare(b.subject);
           return result;
         });
       } else if (this.subjectSort === -1) {
         this.subjectSort = 1;
-        this.professors.sort(function(b, a) {
+        this.professors.sort(function (b, a) {
           var result = a.subject.localeCompare(b.subject);
           return result;
         });
