@@ -229,6 +229,7 @@
   margin-top: 4em;
   margin-bottom: 0em;
   line-height: 0em;
+  font-weight: 900;
 }
 .professor-details p {
   line-height: 0em;
@@ -396,7 +397,9 @@ dialog form {
 
 dialog input,
 dialog textarea {
-  width: 100%;
+  padding-left: 0.4em;
+  margin: 0 auto;
+  width: 95%;
   display: block;
   height: 2em;
   background-color: #ededed;

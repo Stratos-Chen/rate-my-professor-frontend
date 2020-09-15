@@ -68,9 +68,9 @@
       >
         <tr>
           <td style="width:250px">
-            <router-link v-bind:to="`/professors/${professor.id}`">{{
+            <a :href="`/professors/${professor.id}`">{{
               professor.name
-            }}</router-link>
+            }}</a>
           </td>
           <td style="width:200px">{{ professor.title }}</td>
           <td style="width:300px">{{ professor.school }}</td>
@@ -78,8 +78,8 @@
           <td style="width:200px">{{ professor.subject }}</td>
           <td style="width: 120px">
             <button
-              class="btn-tertiary"
-              id="delete-professor-btn"
+              class="btn-tertiary delete"
+
               style="width:100px"
               v-on:click="deleteProfessor(professor.id)"
             >
@@ -108,6 +108,8 @@
         <input type="text" v-model="newProfessorDepartment" />
         <label>Subject:</label>
         <input type="text" v-model="newProfessorSubject" />
+        <label>URL:</label>
+        <input type="text" v-model="newProfessorUrl" />
 
         <button class="dialog-button" v-on:click="createProfessor()">
           Add Professor
@@ -161,6 +163,10 @@
     6px 8px 10px -4px rgba(41, 41, 41, 0.303);
 }
 
+.search-button:hover {
+  background: rgba(244, 247, 40, 1) 0%;
+}
+
 .add-professor-button {
   font-size: 1.1em;
   margin-top: 3rem;
@@ -185,9 +191,13 @@ button i {
   padding-left: 0px;
 }
 
-#delete-professor-btn {
+.delete {
   font-size: 0.7em;
   color: #cccccc;
+}
+
+.delete:hover {
+  color: rgb(210, 48, 48) !important;
 }
 
 .professor-table {
@@ -199,6 +209,17 @@ button i {
   box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.071),
     0 20px 40px -20px rgba(0, 0, 0, 0.4), 0 70px 50px -30px rgba(0, 0, 0, 0.05),
     0 30px 60px -5px rgba(203, 14, 39, 0.036);
+}
+
+.professor-table a {
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #3f63ab;
+  font-weight: 500;
+}
+
+.professor-table a:hover {
+  color: #cccccc;
 }
 
 table {
@@ -227,9 +248,14 @@ td {
   background: #919191;
 }
 
+.professor-information router-link {
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
 dialog {
   font-family: "Avenir", sans-serif;
-  height: 95%;
+  height: 90%;
   width: 600px;
   text-transform: uppercase;
   border-radius: 10px;
@@ -280,6 +306,7 @@ export default {
       newProfessorSchool: "",
       newProfessorDepartment: "",
       newProfessorSubject: "",
+      newProfessorUrl: "",
       errors: [],
       name: "",
       title: "",
@@ -310,6 +337,7 @@ export default {
         school: this.newProfessorSchool,
         department: this.newProfessorDepartment,
         subject: this.newProfessorSubject,
+        url: this.newProfessorUrl,
       };
       axios
         .post("/professors", params)
