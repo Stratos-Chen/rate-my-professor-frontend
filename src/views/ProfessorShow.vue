@@ -107,7 +107,7 @@
         <!-- <input type ="number" step="0.5" v-model="newReviewScore"> -->
 
         <div class="star-rater">
-          <star-rating @rating-selected="setRating" :increment="0.5" :star-size="31" :padding="12" text-class='star-score'	></star-rating>
+          <star-rating text-class="star-score" @rating-selected="setRating" :increment="0.5" :star-size="31" :padding="12" ></star-rating>
         </div>
         
         <button class="dialog-button" v-on:click="createReview()">Create Review</button>
@@ -123,7 +123,7 @@
         <div class="star-rater">
           <star-rating v-model="currentReview.score" @rating-selected="setRating" :increment="0.5" :star-size="31" :padding="12"></star-rating>
         </div>
-        <button v-on:click="updateReview()">Update Review</button><br>
+        <button class="dialog-button" v-on:click="updateReview()">Update Review</button><br>
       </form>
     </dialog>
 
@@ -144,7 +144,7 @@
         <input type=text class="form-control" v-model="professor.subject" />
         <label>URL:</label>
         <input type=text class="form-control" v-model="professor.url" />
-      <button v-on:click="updateProfessor()">Update Professor</button>
+      <button class="dialog-button" v-on:click="updateProfessor()">Update Professor</button>
       </form>
     </dialog>
 
@@ -371,7 +371,7 @@ button i {
 
 dialog {
   font-family: "Lato", sans-serif;
-  height: 90%;
+  height: 70%;
   width: 600px;
   text-transform: uppercase;
   border-radius: 10px;
@@ -410,24 +410,23 @@ dialog textarea {
 }
 
 dialog .star-rater {
-  align-content: center;
+  display: block;
+  margin: 0 auto;
   text-align: center;
-  display: inline-block;
-  width: 600px;
-}
-
-.reviewnew star-rating {
-  text-align: center;
+  /* align-items: center;
+  align-content: center; */
+  width: 230px;
 }
 
 .star-score {
-  font-weight: bold;
-  font-size: 2em;
-  line-height: 1em;
-  font-size: 5em;
+  font-weight: 900;
+  font-family: serif;
+  margin-bottom: 2em;
 }
 
 .dialog-button {
+  display: block;
+  margin: 2em auto 0 auto;
   text-align: center;
 }
 

@@ -28,7 +28,7 @@
     <div class="professor-table">
       <table class="professor-labels" style="width:100%;">
         <tr>
-          <td style="width:250px">
+          <td style="width:250px;padding-left:1em;">
             <button class="btn-tertiary" v-on:click="sortProfessorByName()">
               Name<i class="material-icons">arrow_drop_down</i>
             </button>
@@ -63,11 +63,12 @@
 
       <table
         class="professor-information"
-        v-for="professor in filterBy(professors, nameFilter, 'name')"
+        v-for="(professor, index) in filterBy(professors, nameFilter, 'name')"
         style="width:100%;"
+         cellspacing="0"
       >
-        <tr>
-          <td style="width:250px">
+        <tr :class="{'evenrow': index % 2 !== 0 }">
+          <td style="width:250px;padding-left:1em;">
             <a :href="`/professors/${professor.id}`">{{
               professor.name
             }}</a>
@@ -197,7 +198,7 @@ button i {
 }
 
 .delete:hover {
-  color: rgb(210, 48, 48) !important;
+  color: #bf3100 !important;
 }
 
 .professor-table {
@@ -223,12 +224,16 @@ button i {
 }
 
 table {
-  border-width: 0px;
+  border-style: none;
 }
 
 td {
   height: 3em;
-  border-style: 0px;
+  border-style: none;
+}
+
+.evenrow {
+  background: #f0f0f0;
 }
 
 .professor-labels {
@@ -244,9 +249,9 @@ td {
   font-size: 1.2em;
 }
 
-.professor-information tr:nth-child(even) {
+/* .professor-information tr:nth-child(even) {
   background: #919191;
-}
+} */
 
 .professor-information router-link {
   text-decoration: none;
@@ -300,6 +305,7 @@ export default {
   data: function () {
     return {
       professors: [],
+      reviews: [],
       nameFilter: "",
       newProfessorName: "",
       newProfessorTitle: "",
@@ -318,12 +324,16 @@ export default {
       schoolSort: 1,
       departmentSort: 1,
       subjectSort: 1,
+      sortIcon: "arrow_drop_down",
     };
   },
   created: function () {
     axios.get("/professors").then((response) => {
       console.log("All Professors:", response.data);
       this.professors = response.data;
+    });
+    axios.get("/reviews").then((response) => {
+      this.reviews = response.data;
     });
   },
   methods: {
