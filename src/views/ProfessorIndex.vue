@@ -35,8 +35,8 @@
           </td>
 
           <td style="width:200px">
-            <button class="btn-tertiary" v-on:click="sortProfessorByTitle()">
-              Title<i class="material-icons">arrow_drop_down</i>
+            <button class="btn-tertiary" v-on:click="sortProfessor()">
+              Score<i class="material-icons">arrow_drop_down</i>
             </button>
           </td>
           <td style="width:300px">
@@ -73,7 +73,7 @@
               professor.name
             }}</a>
           </td>
-          <td style="width:200px">{{ professor.title }}</td>
+          <td style="width:200px"><star-rating :rating="reviewsByProfessor(professor.id)" :increment="0.1" :star-size="17" :padding="7" active-color="#da952e" :read-only="true" :show-rating="false"></star-rating></td>
           <td style="width:300px">{{ professor.school }}</td>
           <td style="width:200px">{{ professor.department }}</td>
           <td style="width:200px">{{ professor.subject }}</td>
@@ -333,6 +333,7 @@ export default {
       this.professors = response.data;
     });
     axios.get("/reviews").then((response) => {
+      console.log("Reviews", response.data);
       this.reviews = response.data;
     });
   },
@@ -381,7 +382,7 @@ export default {
         });
       }
     },
-    sortProfessorByTitle: function () {
+    sortProfessor: function () {
       if (this.titleSort === 1) {
         this.titleSort = -1;
         this.professors.sort(function (a, b) {
@@ -441,13 +442,16 @@ export default {
         });
       }
     },
-
-    // this.sortVariable = "name";
-    // if (this.professorSort === 1) {
-    //   this.professorSort = -1;
-    // } else if (this.professorSort === -1) {
-    //   this.professortSort = 1;
-    // }
+    reviewsByProfessor: function (id) {
+      var reviewList = this.reviews
+        .filter((obj) => obj.professor_id === id)
+        .map((obj) => obj.score);
+      var sum = reviewList.reduce((a, b) => a + b, 0);
+      var result = sum / reviewList.length;
+      if (!isNaN(result)) {
+        return result;
+      }
+    },
   },
 };
 </script>
