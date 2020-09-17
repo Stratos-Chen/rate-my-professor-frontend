@@ -73,7 +73,7 @@
               professor.name
             }}</a>
           </td>
-          <td style="width:200px"><star-rating :rating="reviewsByProfessor(professor.id)" :increment="0.1" :star-size="17" :padding="7" active-color="#da952e" :read-only="true" :show-rating="false"></star-rating></td>
+          <td style="width:200px"><star-rating :rating="professor.avg" :increment="0.1" :star-size="17" :padding="7" active-color="#da952e" :read-only="true" :show-rating="false"></star-rating></td>
           <td style="width:300px">{{ professor.school }}</td>
           <td style="width:200px">{{ professor.department }}</td>
           <td style="width:200px">{{ professor.subject }}</td>
@@ -442,16 +442,16 @@ export default {
         });
       }
     },
-    reviewsByProfessor: function (id) {
-      var reviewList = this.reviews
-        .filter((obj) => obj.professor_id === id)
-        .map((obj) => obj.score);
-      var sum = reviewList.reduce((a, b) => a + b, 0);
-      var result = sum / reviewList.length;
-      if (!isNaN(result)) {
-        return result;
-      }
-    },
+    // reviewsByProfessor: function (id) {
+    //   var reviewList = this.reviews
+    //     .filter((obj) => obj.professor_id === id)
+    //     .map((obj) => obj.score);
+    //   var sum = reviewList.reduce((a, b) => a + b, 0);
+    //   var result = sum / reviewList.length;
+    //   if (!isNaN(result)) {
+    //     return result;
+    //   }
+    // },
   },
 };
 </script>

@@ -89,7 +89,9 @@
           <star-rating v-model="review.score" :increment="0.1" :star-size="15" :padding="5" active-color="#da952e" :read-only="true" :show-rating="false"></star-rating>
         <p>{{ review.text }}</p> 
         <button class="btn-secondary" v-on:click="editReview(review)"><i class="material-icons" style="font-size:1.2em;">edit</i>Edit Review</button>
-        <button class="btn-tertiary" v-on:click="deleteReview(review.id)">Delete Review</button>
+        <button class="like-button" v-on:click="likeReview(review.id)"><i class="material-icons" style="font-size:1.2em;">thumb_up</i>{{review.likes}}</button>
+        <button class="btn-tertiary delete" v-on:click="deleteReview(review.id)">Delete Review</button>
+        
       </div>
       <h2 v-if="reviews.length===0" style="text-align: center;font-weight:300;"><br>No Reviews Yet!</h2>
     </div>
@@ -357,16 +359,32 @@ button i {
   background-color: #cccccc;
 }
 
+.btn-secondary:hover {
+  background-color: #e1e1e1;
+}
+
 .btn-tertiary {
   background-color: rgba(0, 0, 0, 0);
   color: #505050;
 }
 
 .btn-tertiary:hover {
-  color: #999999 !important;
+  color: #999999;
 }
 .btn-tertiary:active {
   border-color: white;
+}
+
+.delete:hover {
+  color: #bf3100 !important;
+}
+
+.like-button {
+  text-align: right;
+}
+
+.like-button:hover {
+  background-color: #a4c2ff;
 }
 
 dialog {
@@ -608,6 +626,12 @@ export default {
     },
     setRating: function (rating) {
       this.newReviewScore = rating;
+    },
+    likeReview(id) {
+      axios.put(`/reviews/${id}/like`).then((response) => {
+        console.log("Review Liked:", response.data);
+        this.reviews.find((x) => x.id === id).likes = response.data[0].likes;
+      });
     },
   },
 };
