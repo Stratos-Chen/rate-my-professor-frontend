@@ -1,10 +1,12 @@
 <template>
   <div class="professorshow">
-
+    <div class="backbutton">
+    <router-link to="../professors" class="btn-tertiary backbutton"><i class="material-icons" >keyboard_arrow_left
+      </i>BACK TO SEARCH</router-link></div>
     <!-- Professor Card -->
-  
+    
     <div class="professor">
-
+      
       <div class="professor-info">
         <div class="rating">
           <h1 id="score" style="font-weight:500 !important;">{{ professorScore }}</h1>
@@ -89,7 +91,7 @@
           <star-rating v-model="review.score" :increment="0.1" :star-size="15" :padding="5" active-color="#da952e" :read-only="true" :show-rating="false"></star-rating>
         <p>{{ review.text }}</p> 
         <button class="btn-secondary" v-on:click="editReview(review)"><i class="material-icons" style="font-size:1.2em;">edit</i>Edit Review</button>
-        <button class="like-button" v-on:click="likeReview(review.id)"><i class="material-icons" style="font-size:1.2em;">thumb_up</i>{{review.likes}}</button>
+        <button class="btn-tertiary like-button" v-on:click="likeReview(review.id)"><i class="material-icons" style="font-size:1.2em;">thumb_up</i>{{review.likes}}</button>
         <button class="btn-tertiary delete" v-on:click="deleteReview(review.id)">Delete Review</button>
         
       </div>
@@ -375,21 +377,41 @@ button i {
   border-color: white;
 }
 
+.backbutton {
+  margin-left: 4%;
+  text-decoration: none;
+  padding: 1.2em;
+  letter-spacing: 0.18em;
+  text-align: left;
+}
+
+.backbutton button {
+  vertical-align: middle;
+  color: #b1b1b1;
+  padding: 1.2em;
+  font: "avenir";
+}
+
+.backbutton i {
+  vertical-align: bottom;
+}
+
 .delete:hover {
   color: #bf3100 !important;
 }
 
 .like-button {
   text-align: right;
+  color: #888787;
 }
 
 .like-button:hover {
-  background-color: #a4c2ff;
+  background-color: #ebebeb;
 }
 
 dialog {
   font-family: "Lato", sans-serif;
-  height: 70%;
+  height: 60rem;
   width: 600px;
   text-transform: uppercase;
   border-radius: 10px;
@@ -399,8 +421,8 @@ dialog {
     0 30px 60px -5px rgba(203, 14, 39, 0.036);
 }
 
-.reviewedit {
-  height: 30%;
+#review-edit {
+  height: 49rem;
 }
 
 form label {
