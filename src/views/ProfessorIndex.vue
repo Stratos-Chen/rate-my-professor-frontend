@@ -35,7 +35,7 @@
           </td>
 
           <td style="width:200px">
-            <button class="btn-tertiary" v-on:click="sortProfessor()">
+            <button class="btn-tertiary" v-on:click="sortProfessorByScore()">
               Score<i class="material-icons">arrow_drop_down</i>
             </button>
           </td>
@@ -144,8 +144,11 @@
 .searchbar input {
   display: inline-block;
   width: 75%;
-  height: 2;
+  height: 1.5em;
   font-size: 1.9em;
+  border-style: solid;
+  border-color: white;
+  border-radius: 4px;
 }
 
 .search-button {
@@ -320,7 +323,7 @@ export default {
       department: "",
       subject: "",
       nameSort: 1,
-      titleSort: 1,
+      scoreSort: 1,
       schoolSort: 1,
       departmentSort: 1,
       subjectSort: 1,
@@ -382,17 +385,17 @@ export default {
         });
       }
     },
-    sortProfessor: function () {
-      if (this.titleSort === 1) {
-        this.titleSort = -1;
+    sortProfessorByScore: function () {
+      if (this.scoreSort === 1) {
+        this.scoreSort = -1;
         this.professors.sort(function (a, b) {
-          var result = a.title.localeCompare(b.title);
+          var result = a.avg.localeCompare(b.avg);
           return result;
         });
-      } else if (this.titleSort === -1) {
-        this.titleSort = 1;
+      } else if (this.scoreSort === -1) {
+        this.scoreSort = 1;
         this.professors.sort(function (b, a) {
-          var result = a.title.localeCompare(b.title);
+          var result = a.avg.localeCompare(b.avg);
           return result;
         });
       }
