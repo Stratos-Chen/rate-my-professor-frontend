@@ -186,7 +186,7 @@
 
 .top-schools {
   display: inline-block;
-  margin: 3rem 4rem 1rem 3rem;
+  margin: 3rem 3.1vw 1rem 3rem;
   height: 12rem;
   width: 30%;
   background-color: white;
@@ -227,14 +227,14 @@
 .featured-professor h4 {
   text-align: left;
   font-weight: 200;
-  margin: 3rem 7rem 0rem 5rem;
+  margin: 3rem 7rem 0rem 4vw;
   letter-spacing: 0.5em;
   line-height: 1em;
 }
 .featured-professor h1 {
   text-align: left;
   font-weight: 500;
-  margin: 1rem 5rem;
+  margin: 1rem 4vw;
   font-size: 2.6em;
   line-height: 1em;
   text-transform: uppercase;
@@ -243,7 +243,7 @@
 
 .add-professor-button {
   display: inline;
-  font-size: 1.1em;
+  font-size: 0.8em;
   /* margin-top: 3rem; */
   padding-top: 1em;
   padding-bottom: 0.75em;
