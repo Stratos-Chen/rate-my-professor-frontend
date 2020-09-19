@@ -1,5 +1,19 @@
 <template>
   <div id="app">
+        <div class="header">
+      <div class="searchbar">
+        <h1>Grade My Professor</h1>
+        <h3>Get their grade before you get the grade</h3>
+        <form role="search" method="get" class="search-form" action="">
+          <label>
+            <span class="screen-reader-text"></span>
+            <input type="search" v-model="nameFilter" class="search-field" />
+            <input type="submit" value="Search" class="search-button" />
+          </label>
+        </form>
+        <br />
+      </div>
+    </div>
     <!-- <h1>Rate My Professor</h1> -->
     <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
@@ -98,5 +112,60 @@ button {
 }
 .btn-tertiary:active {
   border-color: white;
+}
+
+.header {
+  display: inline-block;
+  height: 250px;
+  width: 100%;
+  background: rgb(54, 54, 80);
+  color: white;
+  align-content: middle;
+}
+
+.searchbar {
+  margin: 4.5rem auto 0 auto;
+  text-align: left;
+  width: 1000px;
+}
+
+.searchbar h1 {
+  font-size: 3em;
+  line-height: 0em;
+}
+
+.searchbar .search-field {
+  display: inline-block;
+  width: 75%;
+  height: 1.5em;
+  font-size: 1.9em;
+  border-style: solid;
+  border-color: white;
+  border-radius: 4px;
+}
+
+.search-button {
+  font-family: "Avenir";
+  text-transform: uppercase;
+  font-weight: 800;
+  display: inline-block;
+  margin: 0 1rem;
+  transform: translateY(-6px);
+  border-style: none;
+  border-radius: 4px;
+  width: 100px;
+  height: 45px;
+  color: rgb(48, 48, 48);
+  background: linear-gradient(
+    90deg,
+    rgba(244, 247, 40, 1) 0%,
+    rgba(255, 160, 0, 1) 100%
+  );
+  box-shadow: 4px 6px 8px -3px rgba(41, 41, 41, 0.297),
+    6px 8px 10px -4px rgba(41, 41, 41, 0.303);
+}
+
+.search-button:hover {
+  background: rgba(244, 247, 40, 1) 0%;
 }
 </style>

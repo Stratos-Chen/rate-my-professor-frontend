@@ -1,6 +1,6 @@
 <template>
   <div class="Professor Index">
-    <div class="header">
+    <!-- <div class="header">
       <div class="searchbar">
         <h1>Grade My Professor</h1>
         <h3>Get their grade before you get the grade</h3>
@@ -15,17 +15,30 @@
         </form>
         <br />
       </div>
-    </div>
+    </div> -->
 
-    <button class="add-professor-button" v-on:click="addProfessor()">
-      <i class="material-icons">
-        school
-      </i>
-      Add Professor
-    </button>
+    
+    <div class="top-schools">
+      <h3>TOP SCHOOLS</h3>
+      <img :src="`//logo.clearbit.com/nyu.edu?size=75`" style="border-radius: 3px;">
+      <img :src="`//logo.clearbit.com/ucla.edu?size=75`" style="border-radius: 3px;">
+   
+      <img :src="`//logo.clearbit.com/syracuse.edu?size=75`" style="border-radius: 3px;">
+  
+    </div>
+    <div class="featured-professor">
+      <h4>FEATURED PROFESSOR</h4>
+      <h1>{{ featuredProfessor.name }}</h1>
+      <!-- <p>{{ review}} -->
+    </div>
+ 
+
+  
 
     <!-- Professor Index -->
     <div class="professor-table">
+      <!-- <h1>Professors</h1> -->
+         <button class="add-professor-button" v-on:click="addProfessor()"><i class="material-icons">school</i>Add Professor</button>
       <table class="professor-labels" style="width:100%;">
         <tr>
           <td style="width:250px;padding-left:1em;">
@@ -171,9 +184,67 @@
   background: rgba(244, 247, 40, 1) 0%;
 }
 
+.top-schools {
+  display: inline-block;
+  margin: 3rem 4rem 1rem 3rem;
+  height: 12rem;
+  width: 30%;
+  background-color: white;
+  border-radius: 7px;
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.071),
+    0 20px 40px -20px rgba(0, 0, 0, 0.4), 0 70px 50px -30px rgba(0, 0, 0, 0.05),
+    0 30px 60px -5px rgba(203, 14, 39, 0.036);
+  overflow: hidden;
+}
+
+.top-schools h3 {
+  margin: 1rem 4rem;
+  letter-spacing: 0.4em;
+  font-weight: 200;
+}
+
+.top-schools img {
+  display: inline-block;
+  margin: 1rem 7%;
+  box-shadow: 2px 6px 10px -3px rgba(41, 41, 41, 0.25),
+    3px 8px 14px -4px rgba(41, 41, 41, 0.25);
+}
+
+.featured-professor {
+  display: inline-block;
+  margin: 3rem 3rem 1rem 0rem;
+  height: 12rem;
+  width: 60%;
+  background-color: white;
+  border-radius: 7px;
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.071),
+    0 20px 40px -20px rgba(0, 0, 0, 0.4), 0 70px 50px -30px rgba(0, 0, 0, 0.05),
+    0 30px 60px -5px rgba(203, 14, 39, 0.036);
+  overflow: hidden;
+  align-items: right;
+}
+
+.featured-professor h4 {
+  text-align: left;
+  font-weight: 200;
+  margin: 3rem 7rem 0rem 5rem;
+  letter-spacing: 0.5em;
+  line-height: 1em;
+}
+.featured-professor h1 {
+  text-align: left;
+  font-weight: 500;
+  margin: 1rem 5rem;
+  font-size: 2.6em;
+  line-height: 1em;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
 .add-professor-button {
+  display: inline;
   font-size: 1.1em;
-  margin-top: 3rem;
+  /* margin-top: 3rem; */
   padding-top: 1em;
   padding-bottom: 0.75em;
 }
@@ -214,6 +285,12 @@ button i {
     0 20px 40px -20px rgba(0, 0, 0, 0.4), 0 70px 50px -30px rgba(0, 0, 0, 0.05),
     0 30px 60px -5px rgba(203, 14, 39, 0.036);
 }
+
+/* .professor-table h1 {
+  display: inline;
+  text-align: left !important;
+  margin-left: 1rem;
+} */
 
 .professor-table a {
   text-transform: uppercase;
@@ -328,12 +405,16 @@ export default {
       departmentSort: 1,
       subjectSort: 1,
       sortIcon: "arrow_drop_down",
+      featuredProfessor: "",
     };
   },
   created: function () {
     axios.get("/professors").then((response) => {
       console.log("All Professors:", response.data);
       this.professors = response.data;
+      this.featuredProfessor = this.professors[
+        Math.floor(Math.random() * this.professors.length)
+      ];
     });
     axios.get("/reviews").then((response) => {
       console.log("Reviews", response.data);
@@ -455,6 +536,7 @@ export default {
     //     return result;
     //   }
     // },
+    chooseFeaturedProfessor: function () {},
   },
 };
 </script>
