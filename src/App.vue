@@ -4,12 +4,12 @@
       <div class="searchbar">
         <h1>Grade My Professor</h1>
         <h3>Get their grade before you get the grade</h3>
-        <form role="search" method="get" class="search-form" action="">
+        <form v-on:submit.prevent="goSearch()" method="get" class="search-form" action="">
           <label>
             <span class="screen-reader-text"></span>
-            <input type="search" v-model="nameFilter" class="search-field" />
-            <input type="submit" value="Search" class="search-button" />
+            <input type="search" v-model="search" class="search-field" />
           </label>
+          <router-link to="/" class="search-button">SEARCH</router-link>
         </form>
         <br />
       </div>
@@ -19,7 +19,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div> -->
-    <router-view />
+    <router-view :nameFilter="search" />
   </div>
 </template>
 
@@ -77,9 +77,9 @@ body {
   color: #2c3e50;
 }
 
-#nav a.router-link-exact-active {
+/* #nav a.router-link-exact-active {
   color: #42b983;
-}
+} */
 
 button {
   background-color: #73a2fd;
@@ -145,27 +145,47 @@ button {
 }
 
 .search-button {
+  display: inline-block;
   font-family: "Avenir";
+  padding-top: 1vh;
+  vertical-align: top;
+  text-align: center;
+  text-decoration: none;
   text-transform: uppercase;
   font-weight: 800;
   display: inline-block;
   margin: 0 1rem;
-  transform: translateY(-6px);
+  /* transform: translateY(); */
   border-style: none;
   border-radius: 4px;
   width: 100px;
-  height: 45px;
+  height: 2.4em;
   color: rgb(48, 48, 48);
   background: linear-gradient(
     90deg,
     rgba(244, 247, 40, 1) 0%,
     rgba(255, 160, 0, 1) 100%
   );
-  box-shadow: 4px 6px 8px -3px rgba(41, 41, 41, 0.297),
-    6px 8px 10px -4px rgba(41, 41, 41, 0.303);
+  box-shadow: 0px 6px 10px -3px rgba(244, 255, 33, 0.242),
+    0px 9px 12px -5px rgba(239, 255, 61, 0.255);
 }
 
 .search-button:hover {
   background: rgba(244, 247, 40, 1) 0%;
 }
 </style>
+<script>
+// import ProfessorIndex from "../src/views/ProfessorShow.vue";
+export default {
+  data: function () {
+    return {
+      search: "",
+    };
+  },
+  methods: {
+    goSearch: function () {
+      this.$router.push("../professors");
+    },
+  },
+};
+</script>

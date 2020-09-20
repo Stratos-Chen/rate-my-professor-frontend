@@ -130,7 +130,9 @@
         </button>
       </form>
     </dialog>
+
   </div>
+  
 </template>
 
 <style scoped>
@@ -381,12 +383,13 @@ dialog textarea {
 import axios from "axios";
 import Vue2Filters from "vue2-filters";
 export default {
+  props: ["name-filter"],
   mixins: [Vue2Filters.mixin],
   data: function () {
     return {
       professors: [],
       reviews: [],
-      nameFilter: "",
+      // nameFilter: "",
       newProfessorName: "",
       newProfessorTitle: "",
       newProfessorSchool: "",

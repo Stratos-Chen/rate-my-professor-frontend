@@ -210,7 +210,7 @@
 .professor .image {
   height: 54px;
   width: 54px;
-  margin: 4rem auto 0rem auto;
+  margin: 5rem auto 0rem auto;
   box-shadow: 4px 6px 6px -3px rgba(41, 41, 41, 0.25),
     6px 8px 8px -4px rgba(41, 41, 41, 0.25);
 }
