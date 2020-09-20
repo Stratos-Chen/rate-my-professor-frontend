@@ -1,35 +1,22 @@
 <template>
   <div class="Professor Index">
-    <!-- <div class="header">
-      <div class="searchbar">
-        <h1>Grade My Professor</h1>
-        <h3>Get their grade before you get the grade</h3>
-        <form role="search" method="get" class="search-form" action="">
-          <label>
-            <span class="screen-reader-text"></span>
-            <input type="search" v-model="nameFilter" class="search-field" />
-            <button class="search-button">
-              Search
-            </button>
-          </label>
-        </form>
-        <br />
-      </div>
-    </div> -->
-
     
     <div class="top-schools">
       <h3>TOP SCHOOLS</h3>
       <img :src="`//logo.clearbit.com/nyu.edu?size=75`" style="border-radius: 3px;">
       <img :src="`//logo.clearbit.com/ucla.edu?size=75`" style="border-radius: 3px;">
-   
       <img :src="`//logo.clearbit.com/syracuse.edu?size=75`" style="border-radius: 3px;">
   
     </div>
     <div class="featured-professor">
+      <div class="featured-info">
       <h4>FEATURED PROFESSOR</h4>
       <h1>{{ featuredProfessor.name }}</h1>
-      <!-- <p>{{ review}} -->
+      </div>
+      <div class="featured-score">
+      <h1>{{ featuredProfessor.avg}}</h1>
+      <star-rating id="feature-star" :rating="featuredProfessor.avg" :increment="0.1" :star-size="17" :padding="7" active-color="#da952e" :read-only="true" :show-rating="false"></star-rating>
+      </div>
     </div>
  
 
@@ -188,7 +175,7 @@
 
 .top-schools {
   display: inline-block;
-  margin: 3rem 3.1vw 1rem 3rem;
+  margin: 3rem 2.4vw 1rem 3rem;
   height: 12rem;
   width: 30%;
   background-color: white;
@@ -197,6 +184,7 @@
     0 20px 40px -20px rgba(0, 0, 0, 0.4), 0 70px 50px -30px rgba(0, 0, 0, 0.05),
     0 30px 60px -5px rgba(203, 14, 39, 0.036);
   overflow: hidden;
+  /* border-left: 9px solid slategray; */
 }
 
 .top-schools h3 {
@@ -224,16 +212,22 @@
     0 30px 60px -5px rgba(203, 14, 39, 0.036);
   overflow: hidden;
   align-items: right;
+  border-left: 9px solid slategray;
 }
 
-.featured-professor h4 {
+.featured-info {
+  width: 70%;
+  float: left;
+}
+
+.featured-info h4 {
   text-align: left;
   font-weight: 200;
-  margin: 3rem 7rem 0rem 4vw;
+  margin: 4rem 7rem 0rem 4vw;
   letter-spacing: 0.5em;
   line-height: 1em;
 }
-.featured-professor h1 {
+.featured-info h1 {
   text-align: left;
   font-weight: 500;
   margin: 1rem 4vw;
@@ -241,6 +235,27 @@
   line-height: 1em;
   text-transform: uppercase;
   letter-spacing: 0.16em;
+}
+
+.featured-score {
+  display: inline-block;
+  width: 200px;
+  height: 100%;
+  margin: 3rem auto 0 auto;
+  text-align: center;
+}
+
+.featured-score h1 {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  font-size: 3em;
+  font-weight: 400;
+  color: #999999;
+  text-align: center;
+}
+
+#feature-star {
+  display: inline-block;
 }
 
 .add-professor-button {
@@ -409,6 +424,7 @@ export default {
       subjectSort: 1,
       sortIcon: "arrow_drop_down",
       featuredProfessor: "",
+      featuredReview: "",
     };
   },
   created: function () {
