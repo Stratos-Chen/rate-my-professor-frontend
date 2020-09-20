@@ -166,8 +166,8 @@ button {
     rgba(244, 247, 40, 1) 0%,
     rgba(255, 160, 0, 1) 100%
   );
-  box-shadow: 0px 6px 10px -3px rgba(244, 255, 33, 0.242),
-    0px 9px 12px -5px rgba(239, 255, 61, 0.255);
+  box-shadow: 0px 0px 12px -4px rgba(244, 255, 33, 0.242),
+    0px 0px 15px -2px rgba(239, 255, 61, 0.255);
 }
 
 .search-button:hover {

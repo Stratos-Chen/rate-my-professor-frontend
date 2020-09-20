@@ -8,6 +8,7 @@
       <img :src="`//logo.clearbit.com/syracuse.edu?size=75`" style="border-radius: 3px;">
   
     </div>
+    
     <div class="featured-professor">
       <div class="featured-info">
       <h4>FEATURED PROFESSOR</h4>
@@ -24,8 +25,8 @@
 
     <!-- Professor Index -->
     <div class="professor-table">
-      <!-- <h1>Professors</h1> -->
-         <button class="add-professor-button" v-on:click="addProfessor()"><i class="material-icons">school</i>Add Professor</button>
+      <h1>Professors</h1>
+         <button class="add-professor-button btn-primary" v-on:click="addProfessor()"><i class="material-icons">school</i>Add Professor</button>
       <table class="professor-labels" style="width:100%;">
         <tr>
           <td style="width:250px;padding-left:1em;">
@@ -258,26 +259,6 @@
   display: inline-block;
 }
 
-.add-professor-button {
-  display: inline;
-  font-size: 0.8em;
-  /* margin-top: 3rem; */
-  padding-top: 1em;
-  padding-bottom: 0.75em;
-}
-
-.add-professor-button i {
-  padding-right: 0.5em;
-}
-
-.add-professor-button:hover {
-  background-color: #a4c2ff;
-}
-
-button i {
-  vertical-align: middle;
-}
-
 .btn-tertiary {
   font-size: 1em;
   padding-left: 0px;
@@ -303,11 +284,36 @@ button i {
     0 30px 60px -5px rgba(203, 14, 39, 0.036);
 }
 
-/* .professor-table h1 {
-  display: inline;
+.professor-table h1 {
+  display: block;
+  float: left;
   text-align: left !important;
   margin-left: 1rem;
-} */
+}
+
+.add-professor-button {
+  margin-top: 0.5rem;
+  float: right;
+  display: block;
+  font-size: 0.8em;
+  text-align: left;
+  padding-top: 1em;
+  text-align: left;
+  box-shadow: 0px 6px 15px -5px rgba(0, 0, 0, 0.166),
+    0px 9px 20px -7px rgba(0, 0, 0, 0.105);
+}
+
+.add-professor-button i {
+  padding-right: 0.5em;
+}
+
+.add-professor-button:hover {
+  background-color: #a4c2ff;
+}
+
+button i {
+  vertical-align: middle;
+}
 
 .professor-table a {
   text-transform: uppercase;
