@@ -134,7 +134,7 @@ button {
 .searchbar {
   margin: 4.5rem auto 0 auto;
   text-align: left;
-  width: 1000px;
+  width: 1300px;
 }
 
 .searchbar h1 {
@@ -154,14 +154,21 @@ button {
 
 .dropdown {
   height: 2.4em;
-  width: 10px;
+  width: 95px;
   font-size: 2em;
   border-style: none;
   border-color: white;
   border-radius: 4px;
-  display: block;
+  display: inline-block;
   font-family: "Avenir";
   font-weight: 800;
+}
+
+select {
+  height: 4.1em;
+  width: 111px;
+  border-radius: 5px;
+  margin: 0 2rem;
 }
 
 .search-button {
