@@ -10,8 +10,8 @@
             <input type="search" v-model="search" class="search-field" />
           </label>
           <div class="dropdown">
-            <select>
-                <option>Name</option>
+            <select v-model="category">
+                <option v-on:click="category='name'">Name</option>
                 <option>Score</option>
                 <option>School</option>
                 <option>Department</option>
@@ -28,7 +28,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div> -->
-    <router-view :nameFilter="search" />
+    <router-view :nameFilter="search" :dropdownFilter="category" />
   </div>
 </template>
 
@@ -200,7 +200,9 @@ button {
 export default {
   data: function() {
     return {
-      search: ""
+      search: "",
+      selectedCategory: "",
+      category: ""
     };
   },
   methods: {
@@ -208,5 +210,9 @@ export default {
       this.$router.push("../professors");
     }
   }
+  // chooseCategory: function() {
+  //   var category = this.selectedCategory;
+  //   return category;
+  // }
 };
 </script>
