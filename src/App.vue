@@ -11,11 +11,10 @@
           </label>
           <div class="dropdown">
             <select v-model="category">
-                <option v-on:click="category='name'">Name</option>
-                <option>Score</option>
-                <option>School</option>
-                <option>Department</option>
-                <option>Subject</option>
+                <option value='name'>Name</option>
+                <option value='school'>School</option>
+                <option value='department'>Department</option>
+                <option value='subject'>Subject</option>
             </select>
           </div>
           <router-link to="/" class="search-button">SEARCH</router-link>
@@ -155,14 +154,14 @@ button {
 
 .dropdown {
   height: 2.4em;
-  width: 100px;
+  width: 10px;
+  font-size: 2em;
   border-style: none;
   border-color: white;
   border-radius: 4px;
-  display: inline-block;
+  display: block;
   font-family: "Avenir";
   font-weight: 800;
-  padding-top: 1vh;
 }
 
 .search-button {
@@ -201,7 +200,6 @@ export default {
   data: function() {
     return {
       search: "",
-      selectedCategory: "",
       category: ""
     };
   },
@@ -210,9 +208,5 @@ export default {
       this.$router.push("../professors");
     }
   }
-  // chooseCategory: function() {
-  //   var category = this.selectedCategory;
-  //   return category;
-  // }
 };
 </script>
