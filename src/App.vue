@@ -9,6 +9,15 @@
             <span class="screen-reader-text"></span>
             <input type="search" v-model="search" class="search-field" />
           </label>
+          <div class="dropdown">
+            <select>
+                <option>Name</option>
+                <option>Score</option>
+                <option>School</option>
+                <option>Department</option>
+                <option>Subject</option>
+            </select>
+          </div>
           <router-link to="/" class="search-button">SEARCH</router-link>
         </form>
         <br />
@@ -144,6 +153,18 @@ button {
   border-radius: 4px;
 }
 
+.dropdown {
+  height: 2.4em;
+  width: 100px;
+  border-style: none;
+  border-color: white;
+  border-radius: 4px;
+  display: inline-block;
+  font-family: "Avenir";
+  font-weight: 800;
+  padding-top: 1vh;
+}
+
 .search-button {
   display: inline-block;
   font-family: "Avenir";
@@ -177,15 +198,15 @@ button {
 <script>
 // import ProfessorIndex from "../src/views/ProfessorShow.vue";
 export default {
-  data: function () {
+  data: function() {
     return {
-      search: "",
+      search: ""
     };
   },
   methods: {
-    goSearch: function () {
+    goSearch: function() {
       this.$router.push("../professors");
-    },
-  },
+    }
+  }
 };
 </script>
