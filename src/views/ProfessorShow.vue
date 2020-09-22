@@ -548,6 +548,7 @@ export default {
       if (confirm("Are you sure you want to delete this review?")) {
         axios.delete(`/reviews/${id}`).then((response) => {
           console.log("Review Deleted");
+          this.$router.go();
         });
       }
     },
@@ -555,6 +556,7 @@ export default {
       this.currentReview = review;
 
       document.querySelector("#review-edit").showModal();
+      console.log(this.currentReview);
     },
     updateReview: function () {
       var params = {

@@ -3,9 +3,9 @@
     
     <div class="top-schools">
       <h3>TOP SCHOOLS</h3>
-      <img :src="`//logo.clearbit.com/nyu.edu?size=75`" style="border-radius: 3px;">
-      <img :src="`//logo.clearbit.com/ucla.edu?size=75`" style="border-radius: 3px;">
-      <img :src="`//logo.clearbit.com/syracuse.edu?size=75`" style="border-radius: 3px;">
+      <img :src="`//logo.clearbit.com/${findURL(topschools[0][0])}?size=75`" style="border-radius: 3px;">
+      <img :src="`//logo.clearbit.com/${findURL(topschools[1][0])}?size=75`" style="border-radius: 3px;">
+      <img :src="`//logo.clearbit.com/${findURL(topschools[2][0])}?size=75`" style="border-radius: 3px;">
   
     </div>
     
@@ -15,7 +15,7 @@
       <h1>{{ featuredProfessor.name }}</h1>
       </div>
       <div class="featured-score">
-      <h1>{{ featuredProfessor.avg}}</h1>
+      <h1>{{ featuredProfessor.avg.toFixed(1)}}</h1>
       <star-rating id="feature-star" :rating="featuredProfessor.avg" :increment="0.1" :star-size="17" :padding="7" active-color="#da952e" :read-only="true" :show-rating="false"></star-rating>
       </div>
     </div>
@@ -406,7 +406,7 @@ import Vue2Filters from "vue2-filters";
 export default {
   props: ["name-filter", "dropdown-filter"],
   mixins: [Vue2Filters.mixin],
-  data: function() {
+  data: function () {
     return {
       professors: [],
       reviews: [],
@@ -430,138 +430,156 @@ export default {
       subjectSort: 1,
       sortIcon: "arrow_drop_down",
       featuredProfessor: "",
-      featuredReview: ""
+      featuredReview: "",
+      topschools: [],
     };
   },
-  created: function() {
-    axios.get("/professors").then(response => {
+  created: function () {
+    axios.get("/professors").then((response) => {
       console.log("All Professors:", response.data);
       this.professors = response.data;
+      this.findTopSchools();
       this.featuredProfessor = this.professors[
         Math.floor(Math.random() * this.professors.length)
       ];
     });
-    axios.get("/reviews").then(response => {
+    axios.get("/reviews").then((response) => {
       console.log("Reviews", response.data);
       this.reviews = response.data;
     });
   },
   methods: {
-    addProfessor: function() {
+    addProfessor: function () {
       document.querySelector("#professor-new").showModal();
     },
-    createProfessor: function() {
+    createProfessor: function () {
       var params = {
         name: this.newProfessorName,
         title: this.newProfessorTitle,
         school: this.newProfessorSchool,
         department: this.newProfessorDepartment,
         subject: this.newProfessorSubject,
-        url: this.newProfessorUrl
+        url: this.newProfessorUrl,
       };
       axios
         .post("/professors", params)
-        .then(response => {
+        .then((response) => {
           console.log("Professor Created", response.data);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error.response.data.errors);
         });
     },
-    deleteProfessor: function(id) {
+    deleteProfessor: function (id) {
       if (confirm("Are you sure you want to delete this professor?")) {
-        axios.delete(`/professors/${id}`).then(response => {
+        axios.delete(`/professors/${id}`).then((response) => {
           console.log("Professor Deleted", response.data);
           this.$router.push("/professors");
         });
       }
     },
-    sortProfessorByName: function() {
+    sortProfessorByName: function () {
       if (this.nameSort === 1) {
         this.nameSort = -1;
-        this.professors.sort(function(a, b) {
+        this.professors.sort(function (a, b) {
           var result = a.name.localeCompare(b.name);
           return result;
         });
       } else if (this.nameSort === -1) {
         this.nameSort = 1;
-        this.professors.sort(function(b, a) {
+        this.professors.sort(function (b, a) {
           var result = a.name.localeCompare(b.name);
           return result;
         });
       }
     },
-    sortProfessorByScore: function() {
+    sortProfessorByScore: function () {
       if (this.scoreSort === 1) {
         this.scoreSort = -1;
-        this.professors.sort(function(a, b) {
-          var result = a.avg.localeCompare(b.avg);
+        this.professors.sort(function (a, b) {
+          var result = a.avg - b.avg;
           return result;
         });
       } else if (this.scoreSort === -1) {
         this.scoreSort = 1;
-        this.professors.sort(function(b, a) {
-          var result = a.avg.localeCompare(b.avg);
+        this.professors.sort(function (b, a) {
+          var result = a.avg - b.avg;
           return result;
         });
       }
     },
-    sortProfessorBySchool: function() {
+    sortProfessorBySchool: function () {
       if (this.schoolSort === 1) {
         this.schoolSort = -1;
-        this.professors.sort(function(a, b) {
+        this.professors.sort(function (a, b) {
           var result = a.school.localeCompare(b.school);
           return result;
         });
       } else if (this.schoolSort === -1) {
         this.schoolSort = 1;
-        this.professors.sort(function(b, a) {
+        this.professors.sort(function (b, a) {
           var result = a.school.localeCompare(b.school);
           return result;
         });
       }
     },
-    sortProfessorByDepartment: function() {
+    sortProfessorByDepartment: function () {
       if (this.departmentSort === 1) {
         this.departmentSort = -1;
-        this.professors.sort(function(a, b) {
+        this.professors.sort(function (a, b) {
           var result = a.department.localeCompare(b.department);
           return result;
         });
       } else if (this.departmentSort === -1) {
         this.departmentSort = 1;
-        this.professors.sort(function(b, a) {
+        this.professors.sort(function (b, a) {
           var result = a.department.localeCompare(b.department);
           return result;
         });
       }
     },
-    sortProfessorBySubject: function() {
+    sortProfessorBySubject: function () {
       if (this.subjectSort === 1) {
         this.subjectSort = -1;
-        this.professors.sort(function(a, b) {
+        this.professors.sort(function (a, b) {
           var result = a.subject.localeCompare(b.subject);
           return result;
         });
       } else if (this.subjectSort === -1) {
         this.subjectSort = 1;
-        this.professors.sort(function(b, a) {
+        this.professors.sort(function (b, a) {
           var result = a.subject.localeCompare(b.subject);
           return result;
         });
       }
     },
-    // reviewsByProfessor: function (id) {
-    //   var reviewList = this.reviews
-    //     .filter((obj) => obj.professor_id === id)
-    //     .map((obj) => obj.score);
-    //   var sum = reviewList.reduce((a, b) => a + b, 0);
-    //   var result = sum / reviewList.length;
-    //   if (!isNaN(result)) {
-    //     return result;
-    //   }
-    // },
-    chooseFeaturedProfessor: function() {}
-  }
+    findTopSchools: function () {
+      var result = this.professors.reduce((acc, value) => {
+        if (!acc[value.school]) {
+          acc[value.school] = [];
+        }
+        acc[value.school].push(value.avg);
+        return acc;
+      }, {});
+
+      var schoolAverage = [];
+      Object.entries(result).forEach((entry) => {
+        const [key, value] = entry;
+        schoolAverage.push([key, this.findAverage(value)]);
+      });
+      schoolAverage.sort(function (b, a) {
+        return a[1] - b[1];
+      });
+      this.topschools = schoolAverage;
+      console.log("result", schoolAverage);
+    },
+    findAverage: function (array) {
+      return array.reduce((a, b) => a + b) / array.length;
+    },
+    findURL: function (schoolName) {
+      var profResult = this.professors.find((i) => i.school === schoolName);
+      return profResult.url;
+    },
+  },
 };
 </script>

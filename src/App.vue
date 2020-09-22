@@ -17,7 +17,8 @@
                 <option value='subject'>Subject</option>
             </select>
           </div>
-          <router-link to="/" class="search-button">SEARCH</router-link>
+          <router-link to="/" class="search-button"><i class="material-icons" style="padding-top: 3px;">search</i>
+          </router-link>
         </form>
         <br />
       </div>
@@ -134,17 +135,20 @@ button {
 .searchbar {
   margin: 4.5rem auto 0 auto;
   text-align: left;
-  width: 1300px;
+  width: 1500px;
 }
 
 .searchbar h1 {
   font-size: 3em;
   line-height: 0em;
 }
+.search-form {
+  width: 100%;
+}
 
 .searchbar .search-field {
   display: inline-block;
-  width: 75%;
+  width: 65%;
   height: 1.5em;
   font-size: 1.9em;
   border-style: solid;
@@ -153,8 +157,8 @@ button {
 }
 
 .dropdown {
-  height: 2.4em;
-  width: 95px;
+  /* height: 2.4em;
+  width: 200px; */
   font-size: 2em;
   border-style: none;
   border-color: white;
@@ -165,10 +169,14 @@ button {
 }
 
 select {
-  height: 4.1em;
+  font-family: "Avenir", sans-serif;
+  font-weight: 500;
+  width: 200px;
+  padding: 12px 1rem 4px 0.5rem;
+  font-size: 20px;
   width: 111px;
   border-radius: 5px;
-  margin: 0 2rem;
+  margin: 0 0.25rem 5rem 1rem;
 }
 
 .search-button {
@@ -182,7 +190,6 @@ select {
   font-weight: 800;
   display: inline-block;
   margin: 0 1rem;
-  /* transform: translateY(); */
   border-style: none;
   border-radius: 4px;
   width: 100px;
@@ -204,16 +211,16 @@ select {
 <script>
 // import ProfessorIndex from "../src/views/ProfessorShow.vue";
 export default {
-  data: function() {
+  data: function () {
     return {
       search: "",
-      category: ""
+      category: "name",
     };
   },
   methods: {
-    goSearch: function() {
+    goSearch: function () {
       this.$router.push("../professors");
-    }
-  }
+    },
+  },
 };
 </script>
