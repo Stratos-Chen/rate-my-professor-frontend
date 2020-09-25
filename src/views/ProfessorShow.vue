@@ -645,7 +645,7 @@ export default {
         if (review.score >= rating && review.score < rating + 1) {
           count++;
         }
-        console.log("Score", (count / this.reviews.length) * 100);
+        // console.log("Score", (count / this.reviews.length) * 100);
       });
       return (count / this.reviews.length) * 100;
     },
