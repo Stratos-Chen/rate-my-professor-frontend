@@ -21,11 +21,11 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
-  {
-    path: "/professors",
-    name: "ProfessorIndex",
-    component: ProfessorIndex,
-  },
+  // {
+  //   path: "/professors",
+  //   name: "ProfessorIndex",
+  //   component: ProfessorIndex,
+  // },
   {
     path: "/professors/:id",
     name: "ProfessorShow",
