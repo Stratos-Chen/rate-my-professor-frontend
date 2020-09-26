@@ -2,7 +2,7 @@
   <div class="professorshow">
     
     <div class="backbutton">
-    <router-link to="../professors" class="btn-tertiary backbutton"><i class="material-icons" >keyboard_arrow_left
+    <router-link to="/" class="btn-tertiary backbutton"><i class="material-icons" >keyboard_arrow_left
       </i>BACK TO SEARCH</router-link></div>
     <!-- Professor Card -->
     
