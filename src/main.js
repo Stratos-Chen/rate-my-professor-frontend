@@ -7,7 +7,7 @@ import Vue2Filters from "vue2-filters";
 import StarRating from "vue-star-rating";
 
 axios.defaults.baseURL =
-  process.env.NODE_ENV === "development" ? "http://localhost:3000" : "/";
+  process.env.NODE_ENV === "production" ? "https://grade-my-prof-backend.herokuapp.com/" : "/";
 
 Vue.config.productionTip = false;
 
